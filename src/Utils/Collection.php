@@ -7,10 +7,9 @@ namespace PokeDB\PokeApiClient\Utils;
 use InvalidArgumentException;
 
 /**
- * Simple Collection Data Structure
+ * Simple Collection Data Structure.
  *
  * @template T
- * @package PokeDB\PokeApiClient\Utils
  */
 class Collection extends Struct implements \IteratorAggregate, \Countable
 {
@@ -31,7 +30,7 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Append an element to the collection
+     * Append an element to the collection.
      *
      * @psalm-param T $element
      * @param mixed|null $element
@@ -45,7 +44,7 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Set an element in the collection
+     * Set an element in the collection.
      *
      * @psalm-param T $element
      * @param string|int|null $key
@@ -58,6 +57,7 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
 
         if ($key === null) {
             $this->elements[] = $element;
+
             return;
         }
 
@@ -65,7 +65,7 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Get an element from the collection
+     * Get an element from the collection.
      *
      * @psalm-return T|null $element
      * @param string|int $key
@@ -81,7 +81,7 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Clear collection
+     * Clear collection.
      *
      * @return void
      */
@@ -91,9 +91,9 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Count the number of elements in the collection
+     * Count the number of elements in the collection.
      *
-     * @return integer
+     * @return int
      */
     public function count(): int
     {
@@ -101,7 +101,7 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Get the keys of the collection elements
+     * Get the keys of the collection elements.
      *
      * @return array
      */
@@ -111,10 +111,10 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Checks if the collection contains an element
+     * Checks if the collection contains an element.
      *
      * @param string|int $key
-     * @return boolean
+     * @return bool
      */
     public function has($key): bool
     {
@@ -130,7 +130,7 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Return array representation
+     * Return array representation.
      *
      * @return array
      */
@@ -140,7 +140,7 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Get the first element of the collection
+     * Get the first element of the collection.
      *
      * @psalm-return T|null
      * @return mixed|null
@@ -151,7 +151,7 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Get the last element of the collection
+     * Get the last element of the collection.
      *
      * @psalm-return T|null
      * @return mixed|null
@@ -170,7 +170,7 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Yield thhe current iterator
+     * Yield thhe current iterator.
      *
      * @return \Generator
      */
@@ -192,7 +192,7 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Validate if element is of expected class
+     * Validate if element is of expected class.
      *
      * @psalm-param T $element
      * @throws InvalidArgumentException if element is not of expected class
@@ -206,7 +206,7 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
             return;
         }
 
-        if (!$element instanceof $expectedClass) {
+        if (! $element instanceof $expectedClass) {
             $elementClass = \get_class($element);
 
             throw new InvalidArgumentException(

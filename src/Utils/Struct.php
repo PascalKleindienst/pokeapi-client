@@ -7,14 +7,12 @@ namespace PokeDB\PokeApiClient\Utils;
 use JsonSerializable;
 
 /**
- * Simple Data Structure
- *
- * @package PokeDB\PokeApiClient\Utils
+ * Simple Data Structure.
  */
 class Struct implements JsonSerializable
 {
     /**
-     * Get elements of the struct
+     * Get elements of the struct.
      *
      * @return array
      */
@@ -35,7 +33,7 @@ class Struct implements JsonSerializable
     }
 
     /**
-     * Convert data time properties to json string format
+     * Convert data time properties to json string format.
      *
      * @param array $array
      * @return void
