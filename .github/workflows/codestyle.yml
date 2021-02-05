@@ -26,7 +26,7 @@ jobs:
           extensions: mbstring, intl, curl
           ini-values: post_max_size=256M, log_errors=1
           coverage: none # disable xdebug, pcov
-          tools: composer:v2, pmd2pr
+          tools: composer:v2
 
       - name: Cache Composer packages
         id: composer-cache
