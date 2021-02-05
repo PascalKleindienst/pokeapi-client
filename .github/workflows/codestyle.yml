@@ -1,4 +1,4 @@
-name: Code Style Analysis
+name: Code Analysis
 
 on: [push, pull_request]
 
@@ -43,6 +43,10 @@ jobs:
         if: ${{ always() }}
         run: ./vendor/bin/phpcs --standard=PSR2 src
 
+      - name: phpmd static code analysis
+        if: ${{ always() }}
+        run: ./vendor/bin/phpmd src xml phpmd-ruleset.xml --ignore-violations-on-exit | ./vendor/bin/pmd2pr
+
       - name: Psalm
         if: ${{ always() }}
         uses: docker://vimeo/psalm-github-actions
@@ -55,7 +59,3 @@ jobs:
         uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: results.sarif
-
-      - name: phpmd static code analysis
-        if: ${{ always() }}
-        run: ./vendor/bin/phpmd src xml phpmd-ruleset.xml --ignore-violations-on-exit | ./vendor/bin/pmd2pr
