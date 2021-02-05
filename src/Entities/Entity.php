@@ -13,7 +13,7 @@ use PokeDB\PokeApiClient\Utils\Struct;
 abstract class Entity extends Struct implements \JsonSerializable
 {
     /**
-     * Get property of entity
+     * Get property of entity.
      *
      * @throws InvalidArgumentException if property does not exist
      * @param string $property
@@ -34,7 +34,7 @@ abstract class Entity extends Struct implements \JsonSerializable
      * Checks if entity has a specific property.
      *
      * @param string $property
-     * @return boolean
+     * @return bool
      */
     public function has(string $property): bool
     {
