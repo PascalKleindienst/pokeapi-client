@@ -41,7 +41,7 @@ jobs:
 
       - name: Run PHPCS for the codestyle
         if: ${{ always() }}
-        run: vendor/bin/phpcs --standard=PSR2 src
+        run: ./vendor/bin/phpcs --standard=PSR2 src
 
       - name: Psalm
         if: ${{ always() }}
@@ -58,4 +58,4 @@ jobs:
 
       - name: phpmd static code analysis
         if: ${{ always() }}
-        run: vendor/bin/phpmd src xml phpmd-ruleset.xml --ignore-violations-on-exit | vendor/bin/pmd2pr
+        run: ./vendor/bin/phpmd src xml phpmd-ruleset.xml --ignore-violations-on-exit | ./vendor/bin/pmd2pr
