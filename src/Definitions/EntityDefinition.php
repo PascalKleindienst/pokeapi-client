@@ -31,6 +31,7 @@ abstract class EntityDefinition
     public function setClient(ClientInterface $client): EntityDefinition
     {
         $this->client = $client;
+
         return $this;
     }
 
@@ -80,7 +81,7 @@ abstract class EntityDefinition
     }
 
     /**
-     * Create a new instance of the entity collection
+     * Create a new instance of the entity collection.
      *
      * @return Collection
      */
