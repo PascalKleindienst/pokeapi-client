@@ -7,10 +7,9 @@ jobs:
     name: Code Style Check and Static Analysis
     strategy:
       matrix:
-        operating-system: ubuntu-latest
         php-versions: ['7.4']
 
-    runs-on: ${{ matrix.operating-system }}
+    runs-on: ubuntu-latest
 
     env:
       COMPOSER_NO_INTERACTION: 1
