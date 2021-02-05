@@ -7,7 +7,7 @@ jobs:
     name: Code Style Check and Static Analysis
     strategy:
       matrix:
-        operating-system: [ubuntu-latest, windows-latest, macos-latest]
+        operating-system: ubuntu-latest
         php-versions: ['7.4']
 
     runs-on: ${{ matrix.operating-system }}
@@ -59,4 +59,4 @@ jobs:
 
       - name: phpmd static code analysis
         if: ${{ always() }}
-        run: vendor/bin/phpmd src xml phpmd-ruleset.xml --ignore-violations-on-exit | pmd2pr
+        run: vendor/bin/phpmd src xml phpmd-ruleset.xml --ignore-violations-on-exit | vendor/bin/pmd2pr
