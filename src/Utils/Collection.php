@@ -184,6 +184,8 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
      *
      * Used to simulate generic collections, ie Collection<SomeType>
      *
+     * @psalm-template RealObjectType of object
+     * @psalm-return class-string<RealObjectType>|null
      * @return string|null
      */
     protected function getExpectedClass(): ?string
@@ -206,7 +208,7 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
             return;
         }
 
-        if (! $element instanceof $expectedClass) {
+        if (!$element instanceof $expectedClass) {
             $elementClass = \get_class($element);
 
             throw new InvalidArgumentException(
