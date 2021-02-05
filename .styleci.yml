@@ -5,3 +5,6 @@ finder:
     - "vendor"
     - "storage"
     - "node_modules"
+
+disabled:
+  - not_operator_with_space
