@@ -15,7 +15,7 @@ use PokeDB\PokeApiClient\Utils\Collection;
 use ReflectionProperty;
 use stdClass;
 
-class EntityCollectionTest extends TestCase
+class EntityDefinitionTest extends TestCase
 {
     public function testSetClient()
     {
