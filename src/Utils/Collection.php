@@ -208,12 +208,14 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
             return;
         }
 
-        if (!$element instanceof $expectedClass) {
-            $elementClass = \get_class($element);
-
-            throw new InvalidArgumentException(
-                sprintf('Expected collection element of type %s got %s', $expectedClass, $elementClass)
-            );
+        if ($element instanceof $expectedClass) {
+            return;
         }
+
+        $elementClass = \gettype($element) == 'object' ? \get_class($element) : \gettype($element);
+
+        throw new InvalidArgumentException(
+            sprintf('Expected collection element of type %s got %s', $expectedClass, $elementClass)
+        );
     }
 }
