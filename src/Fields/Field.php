@@ -71,8 +71,8 @@ abstract class Field
      * Resolve the field.
      *
      * @param array $data
-     * @param ClientInterface $client
+     * @param ClientInterface|null $client
      * @return mixed
      */
-    abstract public function resolve(array $data, ClientInterface $client);
+    abstract public function resolve(array $data, ClientInterface $client = null);
 }

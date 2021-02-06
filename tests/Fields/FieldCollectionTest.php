@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PokeDB\PokeApiClient\Tests\Utils;
+namespace PokeDB\PokeApiClient\Tests\Fields;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
