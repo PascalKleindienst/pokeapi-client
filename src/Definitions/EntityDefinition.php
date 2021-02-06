@@ -23,6 +23,13 @@ abstract class EntityDefinition
     protected $client;
 
     /**
+     * Constructor.
+     */
+    final public function __construct()
+    {
+    }
+
+    /**
      * Set the client.
      *
      * @param ClientInterface $client
