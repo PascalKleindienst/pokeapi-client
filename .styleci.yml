@@ -5,6 +5,7 @@ finder:
     - "vendor"
     - "storage"
     - "node_modules"
+    - "tests"
 
 disabled:
   - not_operator_with_successor_space

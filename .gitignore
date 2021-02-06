@@ -1,3 +1,5 @@
 .vscode
+build
 vendor
 pokeapi/cache
+.phpunit.result.cache

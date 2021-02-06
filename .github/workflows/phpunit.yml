@@ -1,0 +1,47 @@
+name: "PHPUnit tests"
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  phpunit:
+    name: "PHPUnit tests"
+    strategy:
+      matrix:
+        php-versions: ['7.4']
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, intl, curl
+          ini-values: post_max_size=256M, log_errors=1
+          coverage: none # disable xdebug, pcov
+          tools: composer:v2
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: "Tests"
+        run: "./vendor/bin/phpunit --coverage--text"
+
+      - name: "Coverage Report"
+        uses: codecov/codecov-action@v1
+        with:
+          files: build/logs/clover.xml
