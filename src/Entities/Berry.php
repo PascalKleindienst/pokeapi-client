@@ -45,15 +45,11 @@ class Berry extends Entity
     protected $naturalGiftPower;
 
     /**
-     * Undocumented variable
-     *
      * @var int The size of this Berry, in millimeters.
      */
     protected $size;
 
     /**
-     * Undocumented variable
-     *
      * @var int The smoothness of this Berry, used in making Pokéblocks or Poffins.
      */
     protected $smoothness;
