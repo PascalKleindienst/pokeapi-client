@@ -1,0 +1,7 @@
+{
+    "flavor": {
+        "name": "spicy",
+        "url": "https://pokeapi.co/api/v2/berry-flavor/1/"
+    },
+    "potency": 10
+}

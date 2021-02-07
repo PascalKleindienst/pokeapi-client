@@ -9,7 +9,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "PokeDB\\PokeApiClient\\": "src/"
+            "PokeDB\\PokeApiClient\\": "src/",
+            "PokeDB\\PokeApiClient\\Tests\\": "tests/"
         }
     },
     "require": {

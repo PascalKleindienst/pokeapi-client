@@ -7,7 +7,13 @@ namespace PokeDB\PokeApiClient;
 use Cache\Adapter\Filesystem\FilesystemCachePool;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
+use PokeDB\PokeApiClient\Definitions\BerryEntityDefinition;
+use PokeDB\PokeApiClient\Definitions\BerryFirmnessEntityDefinition;
+use PokeDB\PokeApiClient\Definitions\BerryFlavorEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\EntityDefinition;
+use PokeDB\PokeApiClient\Entities\Berry;
+use PokeDB\PokeApiClient\Entities\BerryFirmness;
+use PokeDB\PokeApiClient\Entities\BerryFlavor;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Exceptions\NetworkException;
 use PokeDB\PokeApiClient\Utils\ClientInterface;
@@ -15,6 +21,8 @@ use Psr\SimpleCache\CacheInterface;
 
 /**
  * API Client.
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Client implements ClientInterface
 {
@@ -38,6 +46,39 @@ class Client implements ClientInterface
     {
         $this->baseUrl = $url;
         $this->cache = $cache ?: new FilesystemCachePool(new Filesystem(new Local('pokeapi')));
+    }
+
+    /**
+     * Fetch a berry.
+     *
+     * @param string|int $idOrName
+     * @return Berry
+     */
+    public function berry($idOrName): Berry
+    {
+        return $this->sendRequest(new BerryEntityDefinition(), $idOrName);
+    }
+
+    /**
+     * Fetch berry firmness.
+     *
+     * @param string|int $idOrName
+     * @return BerryFirmness
+     */
+    public function berryFirmness($idOrName): BerryFirmness
+    {
+        return $this->sendRequest(new BerryFirmnessEntityDefinition(), $idOrName);
+    }
+
+    /**
+     * Fetch berry flavor.
+     *
+     * @param string|int $idOrName
+     * @return BerryFlavor
+     */
+    public function berryFlavor($idOrName): BerryFlavor
+    {
+        return $this->sendRequest(new BerryFlavorEntityDefinition(), $idOrName);
     }
 
     /**
