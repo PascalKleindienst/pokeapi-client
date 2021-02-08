@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Definitions;
 
-use PokeDB\PokeApiClient\Entities\BerryFlavor;
-use PokeDB\PokeApiClient\Fields\ArrayField;
+use PokeDB\PokeApiClient\Entities\ContestType;
 use PokeDB\PokeApiClient\Fields\FieldCollection;
 use PokeDB\PokeApiClient\Fields\NamedAPIResourceField;
 use PokeDB\PokeApiClient\Fields\NumberField;
@@ -13,16 +12,16 @@ use PokeDB\PokeApiClient\Fields\StringField;
 use PokeDB\PokeApiClient\Fields\TranslatedField;
 
 /**
- * Berry Flavor Entity Definition.
+ * Contest Type Entity Definition.
  */
-class BerryFlavorEntityDefinition extends EntityDefinition
+class ContestTypeEntityDefinition extends EntityDefinition
 {
     /**
      * @inheritDoc
      */
     public function getEndpoint(): string
     {
-        return 'berry-flavor';
+        return 'contest-type';
     }
 
     /**
@@ -30,7 +29,7 @@ class BerryFlavorEntityDefinition extends EntityDefinition
      */
     public function getEntityClass(): string
     {
-        return BerryFlavor::class;
+        return ContestType::class;
     }
 
     /**
@@ -42,8 +41,8 @@ class BerryFlavorEntityDefinition extends EntityDefinition
             new NumberField('id'),
             new StringField('name'),
             new TranslatedField('names', 'names', 'name'),
-            new NamedAPIResourceField('contestType', 'contest_type', ContestTypeEntityDefinition::class),
-            new ArrayField('berries', 'berries', FlavorBerryMapEntityDefinition::class)
+            new TranslatedField('colors', 'names', 'color'),
+            new NamedAPIResourceField('berryFlavor', 'berry_flavor', BerryFlavorEntityDefinition::class)
         ]);
     }
 }

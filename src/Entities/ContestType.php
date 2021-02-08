@@ -7,12 +7,12 @@ namespace PokeDB\PokeApiClient\Entities;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
- * Flavors determine whether a Pokémon will benefit or suffer from eating a berry based on their nature.
+ * Contest types are categories judges used to weigh a Pokémon's condition in Pokémon contests.
  * Check out Bulbapedia for greater detail.
  *
- * @see https://pokeapi.co/docs/v2#berry-flavors
+ * @see https://pokeapi.co/docs/v2#contest-types
  */
-class BerryFlavor extends Entity
+class ContestType extends Entity
 {
     /**
      * @var int The identifier for this resource.
@@ -25,19 +25,19 @@ class BerryFlavor extends Entity
     protected $name;
 
     /**
-     * @var Collection<FlavorBerryMap> A list of the berries with this flavor.
+     * @var BerryFlavor The berry flavor that correlates with this contest type.
      */
-    protected $berries;
+    protected $berryFlavor;
 
     /**
-     * @var Collection The name of this resource listed in different languages.
+     * @var Collection The name of this contest type listed in different languages.
      */
     protected $names;
 
     /**
-     * @var ContestType The contest type that correlates with this berry flavor.
+     * @var Collection The color associated with this contest's name in different languages.
      */
-    protected $contestType;
+    protected $colors;
 
     /**
      * Get the identifier for this resource.
@@ -60,17 +60,17 @@ class BerryFlavor extends Entity
     }
 
     /**
-     * Get a list of the berries with this flavor.
+     * Get the berry flavor that correlates with this contest type.
      *
-     * @return Collection<FlavorBerryMap>
+     * @return BerryFlavor
      */
-    public function getBerries(): Collection
+    public function getBerryFlavor(): BerryFlavor
     {
-        return $this->berries;
+        return $this->berryFlavor;
     }
 
     /**
-     * Get the name of this resource listed in different languages.
+     * Get the name of this contest type listed in different languages.
      *
      * @return Collection
      */
@@ -80,12 +80,12 @@ class BerryFlavor extends Entity
     }
 
     /**
-     * Get the contest type that correlates with this berry flavor.
+     * Get the color associated with this contest's name in different languages.
      *
-     * @return ContestType
+     * @return Collection
      */
-    public function getContestType()
+    public function getColors(): Collection
     {
-        return $this->contestType;
+        return $this->colors;
     }
 }

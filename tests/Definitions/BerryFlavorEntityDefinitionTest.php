@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use PokeDB\PokeApiClient\Definitions\BerryFlavorEntityDefinition;
 use PokeDB\PokeApiClient\Entities\Berry;
 use PokeDB\PokeApiClient\Entities\BerryFlavor;
+use PokeDB\PokeApiClient\Entities\ContestType;
 use PokeDB\PokeApiClient\Tests\helpers\TestFileLoader;
 
 class BerryFlavorEntityDefinitionTest extends TestCase
@@ -39,6 +40,7 @@ class BerryFlavorEntityDefinitionTest extends TestCase
         $this->assertEquals($data['name'], $entity->getName());
         $this->assertEquals($entity->getNames()->get('fr'), 'Épicé');
         $this->assertEquals($entity->getNames()->get('en'), 'Spicy');
+        $this->assertInstanceOf(ContestType::class, $entity->getContestType());
 
         foreach ($entity->getBerries() as $key => $berry) {
             $this->assertEquals($data['berries'][$key]['potency'], $berry->getPotency());
