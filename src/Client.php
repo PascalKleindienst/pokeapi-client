@@ -10,11 +10,17 @@ use League\Flysystem\Filesystem;
 use PokeDB\PokeApiClient\Definitions\BerryEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\BerryFirmnessEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\BerryFlavorEntityDefinition;
+use PokeDB\PokeApiClient\Definitions\ContestEffectEntityDefinition;
+use PokeDB\PokeApiClient\Definitions\ContestTypeEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\EntityDefinition;
+use PokeDB\PokeApiClient\Definitions\SuperContestEffectEntityDefinition;
 use PokeDB\PokeApiClient\Entities\Berry;
 use PokeDB\PokeApiClient\Entities\BerryFirmness;
 use PokeDB\PokeApiClient\Entities\BerryFlavor;
+use PokeDB\PokeApiClient\Entities\ContestEffect;
+use PokeDB\PokeApiClient\Entities\ContestType;
 use PokeDB\PokeApiClient\Entities\Entity;
+use PokeDB\PokeApiClient\Entities\SuperContestEffect;
 use PokeDB\PokeApiClient\Exceptions\NetworkException;
 use PokeDB\PokeApiClient\Utils\ClientInterface;
 use Psr\SimpleCache\CacheInterface;
@@ -79,6 +85,39 @@ class Client implements ClientInterface
     public function berryFlavor($idOrName): BerryFlavor
     {
         return $this->sendRequest(new BerryFlavorEntityDefinition(), $idOrName);
+    }
+
+    /**
+     * Fetch a contest effect.
+     *
+     * @param string|int $idOrName
+     * @return ContestEffect
+     */
+    public function contestEffect($idOrName): ContestEffect
+    {
+        return $this->sendRequest(new ContestEffectEntityDefinition(), $idOrName);
+    }
+
+    /**
+     * Fetch a contest type
+     *
+     * @param string|int $idOrName
+     * @return ContestType
+     */
+    public function contestType($idOrName): ContestType
+    {
+        return $this->sendRequest(new ContestTypeEntityDefinition(), $idOrName);
+    }
+
+    /**
+     * Fetch a super contest effect.
+     *
+     * @param string|int $idOrName
+     * @return SuperContestEffect
+     */
+    public function superContestEffect($idOrName): SuperContestEffect
+    {
+        return $this->sendRequest(new SuperContestEffectEntityDefinition(), $idOrName);
     }
 
     /**

@@ -10,11 +10,17 @@ use PokeDB\PokeApiClient\Client;
 use PokeDB\PokeApiClient\Definitions\BerryEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\BerryFirmnessEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\BerryFlavorEntityDefinition;
+use PokeDB\PokeApiClient\Definitions\ContestEffectEntityDefinition;
+use PokeDB\PokeApiClient\Definitions\ContestTypeEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\EntityDefinition;
+use PokeDB\PokeApiClient\Definitions\SuperContestEffectEntityDefinition;
 use PokeDB\PokeApiClient\Entities\Berry;
 use PokeDB\PokeApiClient\Entities\BerryFirmness;
 use PokeDB\PokeApiClient\Entities\BerryFlavor;
+use PokeDB\PokeApiClient\Entities\ContestEffect;
+use PokeDB\PokeApiClient\Entities\ContestType;
 use PokeDB\PokeApiClient\Entities\Entity;
+use PokeDB\PokeApiClient\Entities\SuperContestEffect;
 use PokeDB\PokeApiClient\Exceptions\NetworkException;
 
 class ClientTest extends TestCase
@@ -111,5 +117,44 @@ class ClientTest extends TestCase
             ->willReturn($this->createMock(BerryFlavor::class));
 
         $client->berryFlavor('foo');
+    }
+
+    public function testContestEffect()
+    {
+        // contestEffect() is only a shorthand for sendRequest, so we test if sendRequest is called with the right args
+        $client = $this->createPartialMock(Client::class, ['sendRequest']);
+        $client
+            ->expects($this->exactly(1))
+            ->method('sendRequest')
+            ->with($this->isInstanceOf(ContestEffectEntityDefinition::class), 'foo')
+            ->willReturn($this->createMock(ContestEffect::class));
+
+        $client->contestEffect('foo');
+    }
+
+    public function testContestType()
+    {
+        // contestType() is only a shorthand for sendRequest, so we test if sendRequest is called with the right args
+        $client = $this->createPartialMock(Client::class, ['sendRequest']);
+        $client
+            ->expects($this->exactly(1))
+            ->method('sendRequest')
+            ->with($this->isInstanceOf(ContestTypeEntityDefinition::class), 'foo')
+            ->willReturn($this->createMock(ContestType::class));
+
+        $client->contestType('foo');
+    }
+
+    public function testSuperContestEffect()
+    {
+        // contestEffect() is only a shorthand for sendRequest, so we test if sendRequest is called with the right args
+        $client = $this->createPartialMock(Client::class, ['sendRequest']);
+        $client
+            ->expects($this->exactly(1))
+            ->method('sendRequest')
+            ->with($this->isInstanceOf(SuperContestEffectEntityDefinition::class), 'foo')
+            ->willReturn($this->createMock(SuperContestEffect::class));
+
+        $client->superContestEffect('foo');
     }
 }
