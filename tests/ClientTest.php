@@ -12,6 +12,7 @@ use PokeDB\PokeApiClient\Definitions\BerryFirmnessEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\BerryFlavorEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\ContestEffectEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\ContestTypeEntityDefinition;
+use PokeDB\PokeApiClient\Definitions\EncounterMethodEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\EntityDefinition;
 use PokeDB\PokeApiClient\Definitions\SuperContestEffectEntityDefinition;
 use PokeDB\PokeApiClient\Entities\Berry;
@@ -19,6 +20,7 @@ use PokeDB\PokeApiClient\Entities\BerryFirmness;
 use PokeDB\PokeApiClient\Entities\BerryFlavor;
 use PokeDB\PokeApiClient\Entities\ContestEffect;
 use PokeDB\PokeApiClient\Entities\ContestType;
+use PokeDB\PokeApiClient\Entities\EncounterMethod;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\SuperContestEffect;
 use PokeDB\PokeApiClient\Exceptions\NetworkException;
@@ -156,5 +158,18 @@ class ClientTest extends TestCase
             ->willReturn($this->createMock(SuperContestEffect::class));
 
         $client->superContestEffect('foo');
+    }
+
+    public function testEncounterMethod()
+    {
+        // encounterMethod() is only a shorthand for sendRequest, so we test if sendRequest is called with the right args
+        $client = $this->createPartialMock(Client::class, ['sendRequest']);
+        $client
+            ->expects($this->exactly(1))
+            ->method('sendRequest')
+            ->with($this->isInstanceOf(EncounterMethodEntityDefinition::class), 'foo')
+            ->willReturn($this->createMock(EncounterMethod::class));
+
+        $client->encounterMethod('foo');
     }
 }
