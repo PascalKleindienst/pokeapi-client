@@ -12,6 +12,8 @@ use PokeDB\PokeApiClient\Definitions\BerryFirmnessEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\BerryFlavorEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\ContestEffectEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\ContestTypeEntityDefinition;
+use PokeDB\PokeApiClient\Definitions\EncounterConditionEntityDefinition;
+use PokeDB\PokeApiClient\Definitions\EncounterConditionValueEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\EncounterMethodEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\EntityDefinition;
 use PokeDB\PokeApiClient\Definitions\SuperContestEffectEntityDefinition;
@@ -20,6 +22,8 @@ use PokeDB\PokeApiClient\Entities\BerryFirmness;
 use PokeDB\PokeApiClient\Entities\BerryFlavor;
 use PokeDB\PokeApiClient\Entities\ContestEffect;
 use PokeDB\PokeApiClient\Entities\ContestType;
+use PokeDB\PokeApiClient\Entities\EncounterCondition;
+use PokeDB\PokeApiClient\Entities\EncounterConditionValue;
 use PokeDB\PokeApiClient\Entities\EncounterMethod;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\SuperContestEffect;
@@ -171,5 +175,31 @@ class ClientTest extends TestCase
             ->willReturn($this->createMock(EncounterMethod::class));
 
         $client->encounterMethod('foo');
+    }
+
+    public function testEncounterCondition()
+    {
+        // encounterCondition() is only a shorthand for sendRequest, so we test if sendRequest is called with the right args
+        $client = $this->createPartialMock(Client::class, ['sendRequest']);
+        $client
+            ->expects($this->exactly(1))
+            ->method('sendRequest')
+            ->with($this->isInstanceOf(EncounterConditionEntityDefinition::class), 'foo')
+            ->willReturn($this->createMock(EncounterCondition::class));
+
+        $client->encounterCondition('foo');
+    }
+
+    public function testEncounterConditionValue()
+    {
+        // encounterConditionValue() is only a shorthand for sendRequest, so we test if sendRequest is called with the right args
+        $client = $this->createPartialMock(Client::class, ['sendRequest']);
+        $client
+            ->expects($this->exactly(1))
+            ->method('sendRequest')
+            ->with($this->isInstanceOf(EncounterConditionValueEntityDefinition::class), 'foo')
+            ->willReturn($this->createMock(EncounterConditionValue::class));
+
+        $client->encounterConditionValue('foo');
     }
 }

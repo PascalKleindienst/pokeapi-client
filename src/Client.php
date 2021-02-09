@@ -12,6 +12,8 @@ use PokeDB\PokeApiClient\Definitions\BerryFirmnessEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\BerryFlavorEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\ContestEffectEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\ContestTypeEntityDefinition;
+use PokeDB\PokeApiClient\Definitions\EncounterConditionEntityDefinition;
+use PokeDB\PokeApiClient\Definitions\EncounterConditionValueEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\EncounterMethodEntityDefinition;
 use PokeDB\PokeApiClient\Definitions\EntityDefinition;
 use PokeDB\PokeApiClient\Definitions\SuperContestEffectEntityDefinition;
@@ -20,6 +22,8 @@ use PokeDB\PokeApiClient\Entities\BerryFirmness;
 use PokeDB\PokeApiClient\Entities\BerryFlavor;
 use PokeDB\PokeApiClient\Entities\ContestEffect;
 use PokeDB\PokeApiClient\Entities\ContestType;
+use PokeDB\PokeApiClient\Entities\EncounterCondition;
+use PokeDB\PokeApiClient\Entities\EncounterConditionValue;
 use PokeDB\PokeApiClient\Entities\EncounterMethod;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\SuperContestEffect;
@@ -131,6 +135,28 @@ class Client implements ClientInterface
     public function encounterMethod($idOrName): EncounterMethod
     {
         return $this->sendRequest(new EncounterMethodEntityDefinition(), $idOrName);
+    }
+
+    /**
+     * Fetch an encounter condition.
+     *
+     * @param string|int $idOrName
+     * @return EncounterCondition
+     */
+    public function encounterCondition($idOrName): EncounterCondition
+    {
+        return $this->sendRequest(new EncounterConditionEntityDefinition(), $idOrName);
+    }
+
+    /**
+     * Fetch an encounter condition value.
+     *
+     * @param string|int $idOrName
+     * @return EncounterConditionValue
+     */
+    public function encounterConditionValue($idOrName): EncounterConditionValue
+    {
+        return $this->sendRequest(new EncounterConditionValueEntityDefinition(), $idOrName);
     }
 
     /**
