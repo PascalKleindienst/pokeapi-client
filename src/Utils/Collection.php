@@ -4,23 +4,25 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Utils;
 
-use InvalidArgumentException;
+use Countable;
+use Generator;
+use IteratorAggregate;
 
 /**
  * Simple Collection Data Structure.
  *
  * @template T
+ * @template-implements IteratorAggregate<T>
  */
-class Collection extends Struct implements \IteratorAggregate, \Countable
+class Collection implements IteratorAggregate, Countable
 {
     /**
-     * @psalm-var T[]
-     * @var array
+     * @var array<T>
      */
-    protected $elements = [];
+    protected array $elements = [];
 
     /**
-     * @param iterable $elements
+     * @param iterable<int|string, T> $elements
      */
     public function __construct(iterable $elements = [])
     {
@@ -33,28 +35,20 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
      * Append an element to the collection.
      *
      * @psalm-param T $element
-     * @param mixed|null $element
-     * @return void
      */
-    public function add($element): void
+    public function add(mixed $element): void
     {
-        $this->validateType($element);
-
         $this->elements[] = $element;
     }
 
     /**
      * Set an element in the collection.
      *
+     * @psalm-param int|string|null $key
      * @psalm-param T $element
-     * @param string|int|null $key
-     * @param mixed|null $element
-     * @return void
      */
-    public function set($key, $element): void
+    public function set(string|int|null $key, mixed $element): void
     {
-        $this->validateType($element);
-
         if ($key === null) {
             $this->elements[] = $element;
 
@@ -67,11 +61,10 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     /**
      * Get an element from the collection.
      *
+     * @psalm-param int|string $key
      * @psalm-return T|null $element
-     * @param string|int $key
-     * @return mixed|null
      */
-    public function get($key)
+    public function get(string|int $key): mixed
     {
         if ($this->has($key)) {
             return $this->elements[$key];
@@ -82,8 +75,6 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
 
     /**
      * Clear collection.
-     *
-     * @return void
      */
     public function clear(): void
     {
@@ -92,8 +83,6 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
 
     /**
      * Count the number of elements in the collection.
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -102,8 +91,6 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
 
     /**
      * Get the keys of the collection elements.
-     *
-     * @return array
      */
     public function getKeys(): array
     {
@@ -112,28 +99,17 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
 
     /**
      * Checks if the collection contains an element.
-     *
-     * @param string|int $key
-     * @return bool
      */
-    public function has($key): bool
+    public function has(string|int $key): bool
     {
         return \array_key_exists($key, $this->elements);
     }
 
-    /**
-     * @return array
-     */
     public function jsonSerialize(): array
     {
         return $this->elements;
     }
 
-    /**
-     * Return array representation.
-     *
-     * @return array
-     */
     public function toArray(): array
     {
         return $this->elements;
@@ -143,9 +119,8 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
      * Get the first element of the collection.
      *
      * @psalm-return T|null
-     * @return mixed|null
      */
-    public function first()
+    public function first(): mixed
     {
         return array_values($this->elements)[0] ?? null;
     }
@@ -154,17 +129,22 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
      * Get the last element of the collection.
      *
      * @psalm-return T|null
-     * @return mixed|null
      */
-    public function last()
+    public function last(): mixed
     {
         return array_values($this->elements)[\count($this->elements) - 1] ?? null;
     }
 
     /**
-     * @param int|string $key
+     * @param callable(T): bool $filter
+     * @return self
      */
-    public function remove($key): void
+    public function filter(callable $filter): self
+    {
+        return new self(array_filter($this->elements, $filter));
+    }
+
+    public function remove(int|string $key): void
     {
         unset($this->elements[$key]);
     }
@@ -172,50 +152,10 @@ class Collection extends Struct implements \IteratorAggregate, \Countable
     /**
      * Yield thhe current iterator.
      *
-     * @return \Generator
+     * @return Generator
      */
-    public function getIterator(): \Generator
+    public function getIterator(): Generator
     {
         yield from $this->elements;
-    }
-
-    /**
-     * Get the expected class.
-     *
-     * Used to simulate generic collections, ie Collection<SomeType>
-     *
-     * @psalm-template RealObjectType of object
-     * @psalm-return class-string<RealObjectType>|null
-     * @return string|null
-     */
-    protected function getExpectedClass(): ?string
-    {
-        return null;
-    }
-
-    /**
-     * Validate if element is of expected class.
-     *
-     * @psalm-param T $element
-     * @throws InvalidArgumentException if element is not of expected class
-     * @param mixed $element
-     * @return void
-     */
-    protected function validateType($element): void
-    {
-        $expectedClass = $this->getExpectedClass();
-        if ($expectedClass === null) {
-            return;
-        }
-
-        if ($element instanceof $expectedClass) {
-            return;
-        }
-
-        $elementClass = \gettype($element) == 'object' ? \get_class($element) : \gettype($element);
-
-        throw new InvalidArgumentException(
-            sprintf('Expected collection element of type %s got %s', $expectedClass, $elementClass)
-        );
     }
 }

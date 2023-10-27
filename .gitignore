@@ -3,3 +3,5 @@ build
 vendor
 pokeapi/cache
 .phpunit.result.cache
+.idea
+var/cache

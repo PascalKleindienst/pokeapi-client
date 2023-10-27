@@ -4,40 +4,20 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Entities;
 
-use InvalidArgumentException;
-use PokeDB\PokeApiClient\Utils\Struct;
+use JsonSerializable;
 
 /**
  * Abstract Entity Class.
  */
-abstract class Entity extends Struct implements \JsonSerializable
+abstract class Entity implements JsonSerializable
 {
-    /**
-     * Get property of entity.
-     *
-     * @throws InvalidArgumentException if property does not exist
-     * @param string $property
-     * @return mixed
-     */
-    public function get(string $property)
+    public function jsonSerialize(): array
     {
-        if ($this->has($property)) {
-            return $this->$property;
-        }
-
-        throw new InvalidArgumentException(
-            sprintf('Property %s do not exist in class %s', $property, static::class)
-        );
+        return get_object_vars($this);
     }
 
-    /**
-     * Checks if entity has a specific property.
-     *
-     * @param string $property
-     * @return bool
-     */
-    public function has(string $property): bool
+    public function toJson(): string
     {
-        return property_exists($this, $property);
+        return json_encode($this, JSON_THROW_ON_ERROR);
     }
 }

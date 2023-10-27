@@ -4,7 +4,12 @@
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     errorLevel="3"
+    ensureArrayStringOffsetsExist="true"
+    findUnusedVariablesAndParams="true"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="false"
     rememberPropertyAssignmentsAfterCall="false"
+    phpVersion="8.2"
     allowPhpStormGenerics="true"
 >
     <projectFiles>
@@ -17,8 +22,11 @@
 
     <issueHandlers>
         <InternalMethod errorLevel="suppress"/>
+        <!-- Does not agree on a type with phpstan after the symfony 5.3 update -->
+        <RedundantCastGivenDocblockType errorLevel="info"/>
 
-        <PropertyNotSetInConstructor errorLevel="suppress"/>
-        <UnresolvableInclude errorLevel="suppress"/>
+        <!-- Does not agree on a type with phpstan after the symfony 5.3 update -->
+        <RedundantCast errorLevel="info"/>
+
     </issueHandlers>
 </psalm>
