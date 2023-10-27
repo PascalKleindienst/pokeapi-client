@@ -7,7 +7,6 @@
     ensureArrayStringOffsetsExist="true"
     findUnusedVariablesAndParams="true"
     findUnusedBaselineEntry="true"
-    findUnusedCode="false"
     rememberPropertyAssignmentsAfterCall="false"
     phpVersion="8.2"
     allowPhpStormGenerics="true"
