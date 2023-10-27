@@ -1,0 +1,11 @@
+parameters:
+    phpVersion: 80200
+    level: 9
+    treatPhpDocTypesAsCertain: false
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    inferPrivatePropertyTypeFromConstructor: true
+    reportUnmatchedIgnoredErrors: true # Could be set to false if necessary during PHPStan update
+    tmpDir: pokeapi/cache/phpstan
+    paths:
+        - src
