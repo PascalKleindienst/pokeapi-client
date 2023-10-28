@@ -22,7 +22,7 @@
     "scripts": {
         "test": "phpunit --coverage-text",
         "phpcs": [
-            "phpcs --standard=phpcs.xml.dist"
+            "phpcs --standard=phpcs.xml.dist -s"
         ],
         "phpstan": [
             "phpstan analyze --memory-limit=2G"
