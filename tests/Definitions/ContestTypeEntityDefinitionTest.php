@@ -6,7 +6,7 @@ namespace PokeDB\PokeApiClient\Tests\Definitions;
 
 use PHPUnit\Framework\TestCase;
 use PokeDB\PokeApiClient\Definitions\ContestTypeEntityDefinition;
-use PokeDB\PokeApiClient\Entities\BerryFlavor;
+use PokeDB\PokeApiClient\Entities\Berries\BerryFlavor;
 use PokeDB\PokeApiClient\Entities\ContestType;
 use PokeDB\PokeApiClient\Tests\helpers\TestFileLoader;
 

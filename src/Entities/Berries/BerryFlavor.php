@@ -7,9 +7,9 @@ namespace PokeDB\PokeApiClient\Entities\Berries;
 use PokeDB\PokeApiClient\Api\Endpoint;
 use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
-use PokeDB\PokeApiClient\Entities\ContestType;
+use PokeDB\PokeApiClient\Entities\Contests\ContestType;
 use PokeDB\PokeApiClient\Entities\Entity;
-use PokeDB\PokeApiClient\Entities\FlavorBerryMap;
+use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
 use PokeDB\PokeApiClient\Utils\Collection;
@@ -21,7 +21,7 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#berry-flavors
  */
 #[Endpoint(Resource::BERRY_FLAVOR)]
-class BerryFlavor extends Entity
+final readonly class BerryFlavor extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
@@ -30,23 +30,23 @@ class BerryFlavor extends Entity
     public function __construct(
         /** @var int $id The identifier for this resource. */
         #[Field(FieldType::NUMBER)]
-        public readonly int $id,
+        public int $id,
 
         /** @var string $name The name for this resource. */
         #[Field(FieldType::STRING)]
-        public readonly string $name,
+        public string $name,
 
         /** @var Collection<FlavorBerryMap> $berries A list of the berries with this flavor. */
         #[Field(FieldType::COLLECTION, definition: FlavorBerryMap::class)]
-        public readonly Collection $berries,
+        public Collection $berries,
 
-        /** @var Collection $names The name of this resource listed in different languages. */
-        #[Field(FieldType::TRANSLATION, apiName: 'name')]
-        public readonly Collection $names,
+        /** @var Collection<Name> $names The name of this resource listed in different languages. */
+        #[Field(FieldType::TRANSLATION, definition: Name::class)]
+        public Collection $names,
 
         /** @var ProxyEndpoint<ContestType>|ContestType $contestType The contest type that correlates with this berry flavor. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: ContestType::class)]
-        public readonly ProxyEndpoint|ContestType $contestType,
+        public ProxyEndpoint|ContestType $contestType,
     ) {
     }
 }

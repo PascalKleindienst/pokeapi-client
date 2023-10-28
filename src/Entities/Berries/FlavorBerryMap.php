@@ -17,7 +17,7 @@ use PokeDB\PokeApiClient\Field\FieldType;
  *
  * @see https://pokeapi.co/docs/v2#berry-flavors
  */
-final readonly class BerryFlavorMap extends Entity
+final readonly class FlavorBerryMap extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
@@ -28,9 +28,9 @@ final readonly class BerryFlavorMap extends Entity
         #[Field(FieldType::NUMBER)]
         public int $potency,
 
-        /** @var ProxyEndpoint<BerryFlavor>|BerryFlavor $flavor The referenced berry flavor. */
-        #[Field(FieldType::NAMED_API_RESOURCE, definition: BerryFlavor::class)]
-        public ProxyEndpoint|BerryFlavor $flavor,
+        /** @var ProxyEndpoint<Berry>|Berry $berry The berry with the referenced flavor. */
+        #[Field(FieldType::NAMED_API_RESOURCE, definition: Berry::class)]
+        public ProxyEndpoint|Berry $berry,
     ) {
     }
 }

@@ -6,8 +6,8 @@ namespace PokeDB\PokeApiClient\Tests\Definitions;
 
 use PHPUnit\Framework\TestCase;
 use PokeDB\PokeApiClient\Definitions\BerryFirmnessEntityDefinition;
-use PokeDB\PokeApiClient\Entities\Berry;
-use PokeDB\PokeApiClient\Entities\BerryFirmness;
+use PokeDB\PokeApiClient\Entities\Berries\Berry;
+use PokeDB\PokeApiClient\Entities\Berries\BerryFirmness;
 use PokeDB\PokeApiClient\Tests\helpers\TestFileLoader;
 
 class BerryFirmnessEntityDefinitionTest extends TestCase

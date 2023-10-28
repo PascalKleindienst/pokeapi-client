@@ -6,8 +6,8 @@ namespace PokeDB\PokeApiClient\Tests\Definitions;
 
 use PHPUnit\Framework\TestCase;
 use PokeDB\PokeApiClient\Definitions\FlavorBerryMapEntityDefinition;
-use PokeDB\PokeApiClient\Entities\Berry;
-use PokeDB\PokeApiClient\Entities\FlavorBerryMap;
+use PokeDB\PokeApiClient\Entities\Berries\Berry;
+use PokeDB\PokeApiClient\Entities\Berries\FlavorBerryMap;
 use PokeDB\PokeApiClient\Tests\helpers\TestFileLoader;
 
 class FlavorBerryMapEntityDefinitionTest extends TestCase

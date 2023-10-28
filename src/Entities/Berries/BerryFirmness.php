@@ -18,7 +18,7 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#berry-firmnesses
  */
 #[Endpoint(Resource::BERRY_FIRMNESS)]
-class BerryFirmness extends Entity
+final readonly class BerryFirmness extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
@@ -27,19 +27,19 @@ class BerryFirmness extends Entity
     public function __construct(
         /** @var int $id The identifier for this resource. */
         #[Field(FieldType::NUMBER)]
-        public readonly int $id,
+        public int $id,
 
         /** @var string $name The name for this resource. */
         #[Field(FieldType::STRING)]
-        public readonly string $name,
+        public string $name,
 
         /** @var Collection<Berry> $berries A list of the berries with this firmness. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Berry::class)]
-        public readonly Collection $berries,
+        public Collection $berries,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
-        #[Field(FieldType::TRANSLATION, apiName: 'name')]
-        public readonly Collection $names,
+        #[Field(FieldType::TRANSLATION, definition: Name::class)]
+        public Collection $names,
     ) {
     }
 }

@@ -9,7 +9,7 @@ use JsonSerializable;
 /**
  * Abstract Entity Class.
  */
-abstract class Entity implements JsonSerializable
+abstract readonly class Entity implements JsonSerializable
 {
     public function jsonSerialize(): array
     {
