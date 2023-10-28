@@ -9,6 +9,7 @@ use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Item;
+use PokeDB\PokeApiClient\Entities\Pokemon\Type;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
 use PokeDB\PokeApiClient\Utils\Collection;
