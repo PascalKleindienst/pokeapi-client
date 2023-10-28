@@ -7,6 +7,7 @@ namespace PokeDB\PokeApiClient\Utils;
 use Countable;
 use Generator;
 use IteratorAggregate;
+use JsonSerializable;
 
 /**
  * Simple Collection Data Structure.
@@ -14,7 +15,7 @@ use IteratorAggregate;
  * @template T
  * @template-implements IteratorAggregate<T>
  */
-class Collection implements IteratorAggregate, Countable
+class Collection implements IteratorAggregate, Countable, JsonSerializable
 {
     /**
      * @var array<T>
