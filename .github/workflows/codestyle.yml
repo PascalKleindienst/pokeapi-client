@@ -7,7 +7,7 @@ jobs:
     name: Code Style Check and Static Analysis
     strategy:
       matrix:
-        php-versions: ['7.4']
+        php-versions: ['8.2']
 
     runs-on: ubuntu-latest
 
@@ -41,11 +41,15 @@ jobs:
 
       - name: Run PHPCS for the codestyle
         if: ${{ always() }}
-        run: ./vendor/bin/phpcs --standard=PSR2 src
+        run: composer phpcs
 
       - name: phpmd static code analysis
         if: ${{ always() }}
-        run: ./vendor/bin/phpmd src xml phpmd-ruleset.xml --ignore-violations-on-exit | ./vendor/bin/pmd2pr
+        run: ./vendor/bin/phpmd src xml phpmd-ruleset.xml --ignore-violations-on-exit
+
+      - name: phpstan
+        if: ${{ always() }}
+        run: composer phpstan
 
       - name: Psalm
         if: ${{ always() }}

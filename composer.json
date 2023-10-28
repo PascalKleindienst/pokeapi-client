@@ -22,7 +22,7 @@
     "scripts": {
         "test": "phpunit --coverage-text",
         "phpcs": [
-            "phpcs --standard=phpcs.xml.dist -s"
+            "phpcs --standard=.phpcs.xml -s"
         ],
         "phpstan": [
             "phpstan analyze --memory-limit=2G"
@@ -39,6 +39,7 @@
         "phpstan/phpstan": "^1.10",
         "vimeo/psalm": "^5.15",
         "squizlabs/php_codesniffer": "^3.7",
-        "dg/bypass-finals": "^1.5"
+        "dg/bypass-finals": "^1.5",
+        "phpmd/phpmd": "^2.14"
     }
 }
