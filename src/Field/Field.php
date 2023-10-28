@@ -46,7 +46,7 @@ final readonly class Field
             FieldType::STRING => (string) ($value ?? ''),
             FieldType::NUMBER => (int) $value,
             FieldType::COLLECTION => $this->getCollection($entityManager, $value ?? []),
-            FieldType::TRANSLATION => $this->getTranslation($data[$key] ?? []),
+            FieldType::TRANSLATION => $this->getTranslation($entityManager, $value ?? []),
             FieldType::NAMED_API_RESOURCE => $this->getApiResource($entityManager, $value ?? []),
             FieldType::NAMED_API_RESOURCE_LIST => $this->getApiResourceList($entityManager, $value ?? []),
             default => $value
@@ -89,22 +89,27 @@ final readonly class Field
     {
         /** @var Collection<Entity> $collection */
         $collection = new Collection();
+
+        /** @var class-string<Entity> $entity */
+        $entity = $this->definition;
+
         foreach ($data as $resource) {
-            /** @var class-string<Entity> $entity */
-            $entity = $this->definition;
             $collection->add($manager->create($entity, $resource));
         }
 
         return $collection;
     }
 
-    public function getTranslation(array $data): Collection
+    public function getTranslation(EntityManager $manager, array $data): Collection
     {
+        /** @var Collection<Entity> $collection */
         $collection = new Collection();
-        foreach ($data as $row) {
-            if ($this->apiName && $row[$this->apiName] !== null) {
-                $collection->set($row['language']['name'], $row[$this->apiName]);
-            }
+
+        /** @var class-string<Entity> $entity */
+        $entity = $this->definition;
+
+        foreach ($data as $resource) {
+            $collection->set($resource['language']['name'], $manager->create($entity, $resource));
         }
 
         return $collection;
