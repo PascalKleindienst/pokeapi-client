@@ -14,6 +14,7 @@ enum Resource: string
     case CONTEST_EFFECT = 'contest-effect';
     case SUPER_CONTEST_EFFECT = 'super-contest-effect';
     case ENCOUNTER = 'encounters';
+    case ENCOUNTER_METHOD = 'encounter-method';
     case ENCOUNTER_CONDITION = 'encounter-condition';
     case ENCOUNTER_CONDITION_VALUE = 'encounter-condition-value';
     case EVOLUTION_CHAIN = 'evolution-chain';
