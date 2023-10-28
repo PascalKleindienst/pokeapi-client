@@ -9,6 +9,7 @@ enum FieldType
     case STRING;
     case NUMBER;
     case BOOLEAN;
+    case ENTITY;
     case COLLECTION;
     case TRANSLATION;
     case NAMED_API_RESOURCE;
