@@ -9,14 +9,15 @@ use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 
 /**
- * Types are properties for Pokémon and their moves. Each type has three properties:
- * which types of Pokémon it is super effective against, which types of Pokémon it is not very effective against,
- * and which types of Pokémon it is completely ineffective against.
+ * Stats determine certain aspects of battles.
  *
- * @see https://pokeapi.co/docs/v2#type
+ * Each Pokémon has a value for each stat which grows as they gain levels and can be altered
+ * momentarily by effects in battles.
+ *
+ * @see https://pokeapi.co/docs/v2#stat
  */
-#[Endpoint(Resource::TYPE)]
-final readonly class Type extends Entity
+#[Endpoint(Resource::STAT)]
+final readonly class Stat extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine

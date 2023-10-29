@@ -7,7 +7,6 @@ namespace PokeDB\PokeApiClient\Entities\Moves;
 use PokeDB\PokeApiClient\Api\Endpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
-use PokeDB\PokeApiClient\Entities\Games\VersionGroup;
 use PokeDB\PokeApiClient\Entities\Utility\Description;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
@@ -15,12 +14,12 @@ use PokeDB\PokeApiClient\Field\FieldType;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
- * Methods by which Pokémon can learn moves.
+ * Targets moves can be directed at during battle. Targets can be Pokémon, environments or even other moves.
  *
  * @see https://pokeapi.co/docs/v2#movelearnmethod
  */
-#[Endpoint(Resource::MOVE_LEARN_METHOD)]
-final readonly class MoveLearnMethod extends Entity
+#[Endpoint(Resource::MOVE_TARGET)]
+final readonly class MoveTarget extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
@@ -35,11 +34,11 @@ final readonly class MoveLearnMethod extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var Collection<VersionGroup> $versionGroups A list of version groups where moves can be learned through this method. */
-        #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'version_groups', definition: VersionGroup::class)]
-        public Collection $versionGroups,
+        /** @var Collection<Move> $moves A list of moves that that are directed at this target. */
+        #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Move::class)]
+        public Collection $moves,
 
-        /** @var Collection<Description> $descriptions The description of this resource listed in different languages.. */
+        /** @var Collection<Description> $descriptions The description of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Description::class)]
         public Collection $descriptions,
 
