@@ -39,11 +39,11 @@ final readonly class MoveLearnMethod extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'version_groups', definition: VersionGroup::class)]
         public Collection $versionGroups,
 
-        /** @var Collection<Description> $descriptions The description of this resource listed in different languages.. */
+        /** @var Collection<Collection<Description>> $descriptions The description of this resource listed in different languages.. */
         #[Field(FieldType::TRANSLATION, definition: Description::class)]
         public Collection $descriptions,
 
-        /** @var Collection<Name> $names The name of this resource listed in different languages. */
+        /** @var Collection<Collection<Name>> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
     ) {

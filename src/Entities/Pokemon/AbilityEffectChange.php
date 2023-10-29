@@ -22,7 +22,7 @@ final readonly class AbilityEffectChange extends Entity
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        /** @var Collection<Effect> $effectEntries The previous effect of this ability listed in different languages. */
+        /** @var Collection<Collection<Effect>> $effectEntries The previous effect of this ability listed in different languages. */
         #[Field(FieldType::TRANSLATION, apiName: 'effect_entries', definition: Effect::class)]
         public Collection $effectEntries,
 

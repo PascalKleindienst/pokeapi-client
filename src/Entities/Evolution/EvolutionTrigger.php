@@ -40,7 +40,7 @@ final readonly class EvolutionTrigger extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'pokemon_species', definition: PokemonSpecies::class)]
         public Collection $pokemonSpecies,
 
-        /** @var Collection<Name> $names The name of this resource listed in different languages. */
+        /** @var Collection<Collection<Name>> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
     ) {

@@ -45,6 +45,7 @@ final readonly class Field
         return match ($this->type) {
             FieldType::STRING => (string) ($value ?? ''),
             FieldType::NUMBER => (int) $value,
+            FieldType::LIST => (array) $value,
             FieldType::ENTITY => $this->createEntity($entityManager, $value ?? []),
             FieldType::COLLECTION => $this->getCollection($entityManager, $value ?? []),
             FieldType::TRANSLATION => $this->getTranslation($entityManager, $value ?? []),
@@ -104,12 +105,19 @@ final readonly class Field
         return $collection;
     }
 
+    /**
+     * @return Collection<Collection<Entity>> Return Entity Translation grouped by their language
+     */
     public function getTranslation(EntityManager $manager, array $data): Collection
     {
-        /** @var Collection<Entity> $collection */
+        /** @var Collection<Collection<Entity>> $collection */
         $collection = new Collection();
         foreach ($data as $resource) {
-            $collection->set($resource['language']['name'], $this->createEntity($manager, $resource));
+            if (!$collection->has($resource['language']['name'])){
+                $collection->set($resource['language']['name'], new Collection());
+            }
+
+            $collection->get($resource['language']['name'])?->add($this->createEntity($manager, $resource));
         }
 
         return $collection;

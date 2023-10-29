@@ -39,7 +39,7 @@ final readonly class EncounterConditionValue extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE, definition: EncounterCondition::class)]
         public ProxyEndpoint|EncounterCondition $condition,
 
-        /** @var Collection<Name> $names The name of this resource listed in different languages. */
+        /** @var Collection<Collection<Name>> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
     ) {

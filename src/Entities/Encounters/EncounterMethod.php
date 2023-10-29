@@ -39,7 +39,7 @@ final readonly class EncounterMethod extends Entity
         #[Field(FieldType::NUMBER)]
         public int $order,
 
-        /** @var Collection<Name> $names The name of this resource listed in different languages. */
+        /** @var Collection<Collection<Name>> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
     ) {
