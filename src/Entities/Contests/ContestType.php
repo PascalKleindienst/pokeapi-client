@@ -40,7 +40,7 @@ final readonly class ContestType extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE, 'berry_flavor', definition: BerryFlavor::class)]
         public ProxyEndpoint|BerryFlavor $berryFlavor,
 
-        /** @var Collection<Collection<ContestName>> $names The name of this contest type listed in different languages. */
+        /** @var Collection<ContestName> $names The name of this contest type listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: ContestName::class)]
         public Collection $names,
     ) {

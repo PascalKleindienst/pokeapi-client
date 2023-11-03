@@ -42,11 +42,11 @@ final readonly class Pokedex extends Entity
         #[Field(FieldType::BOOLEAN, apiName: 'is_main_series')]
         public bool $isMainSeries,
 
-        /** @var Collection<Collection<Description>> $descriptions The description of this resource listed in different languages. */
+        /** @var Collection<Description> $descriptions The description of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Description::class)]
         public Collection $descriptions,
 
-        /** @var Collection<Collection<Name>> $names The name of this resource listed in different languages. */
+        /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
 

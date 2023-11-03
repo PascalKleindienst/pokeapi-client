@@ -37,7 +37,7 @@ final readonly class PalParkArea extends Entity
         #[Field(FieldType::COLLECTION, definition: PalParkEncounterSpecies::class)]
         public Collection $pokemonEncounters,
 
-        /** @var Collection<Collection<Name>> $names The name of this resource listed in different languages. */
+        /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
     ) {

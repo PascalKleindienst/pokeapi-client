@@ -111,7 +111,10 @@ class Collection implements IteratorAggregate, Countable, JsonSerializable
         return $this->elements;
     }
 
-    public function toArray(): array
+    /**
+     * @return array<T>
+     */
+    public function all(): array
     {
         return $this->elements;
     }
@@ -138,11 +141,41 @@ class Collection implements IteratorAggregate, Countable, JsonSerializable
 
     /**
      * @param callable(T): bool $filter
-     * @return self
+     * @return self<T>
      */
     public function filter(callable $filter): self
     {
         return new self(array_filter($this->elements, $filter));
+    }
+
+    /**
+     * @param callable(T): bool $callback
+     */
+    public function map(callable $callback): self
+    {
+        return new self(array_map($callback, $this->elements));
+    }
+
+    /**
+     * @return self<list<T>>
+     */
+    public function groupBy(string $column): self
+    {
+        /** @var array<list<T>> $group */
+        $group = [];
+        foreach ($this->getIterator() as $element) {
+            $key = \is_object($element) && property_exists($element, $column) ? $element->$column : ($element[$column] ?? '');
+            $group[$key][] = $element;
+        }
+
+        /** @var self<list<T>> $collection */
+        $collection = new self($group);
+        return $collection;
+    }
+
+    public function pluck(string $column, ?string $index = null): self
+    {
+        return new self(array_column($this->elements, $column, $index));
     }
 
     public function remove(int|string $key): void
@@ -153,7 +186,7 @@ class Collection implements IteratorAggregate, Countable, JsonSerializable
     /**
      * Yield thhe current iterator.
      *
-     * @return Generator
+     * @return Generator<T>
      */
     public function getIterator(): Generator
     {

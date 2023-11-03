@@ -27,6 +27,7 @@ final readonly class VersionGroupFlavorText extends Entity
         /** @var ProxyEndpoint<Language>|Language $language The language this effect is in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Language::class)]
         public ProxyEndpoint|Language $language,
+        public string $locale,
 
         /** @var ProxyEndpoint<VersionGroup>|VersionGroup $versionGroup The version group which uses this flavor text. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'version_group', definition: VersionGroup::class)]

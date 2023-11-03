@@ -38,7 +38,7 @@ final readonly class MoveCategory extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Move::class)]
         public Collection $moves,
 
-        /** @var Collection<Collection<Description>> $descriptions The description of this resource listed in different languages. */
+        /** @var Collection<Description> $descriptions The description of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Description::class)]
         public Collection $descriptions,
     ) {

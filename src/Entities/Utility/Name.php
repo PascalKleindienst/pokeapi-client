@@ -26,6 +26,7 @@ final readonly class Name extends Entity
         /** @var ProxyEndpoint<Language>|Language $language The language this name is in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Language::class)]
         public ProxyEndpoint|Language $language,
+        public string $locale,
     ) {
     }
 }

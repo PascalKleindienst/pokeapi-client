@@ -40,7 +40,7 @@ final readonly class BerryFlavor extends Entity
         #[Field(FieldType::COLLECTION, definition: FlavorBerryMap::class)]
         public Collection $berries,
 
-        /** @var Collection<Collection<Name>> $names The name of this resource listed in different languages. */
+        /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
 

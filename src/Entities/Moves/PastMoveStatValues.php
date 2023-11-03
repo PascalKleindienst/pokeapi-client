@@ -39,7 +39,7 @@ final readonly class PastMoveStatValues extends Entity
         #[Field(FieldType::NUMBER)]
         public int $pp,
 
-        /** @var Collection<Collection<VerboseEffect>> $effectEntries The effect of this move listed in different languages. */
+        /** @var Collection<VerboseEffect> $effectEntries The effect of this move listed in different languages. */
         #[Field(FieldType::TRANSLATION, apiName: 'effect_entries', definition: VerboseEffect::class)]
         public Collection $effectEntries,
 

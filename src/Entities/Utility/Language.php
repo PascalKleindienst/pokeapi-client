@@ -26,27 +26,27 @@ final readonly class Language extends Entity
     public function __construct(
         /** @var int $id The identifier for this resource. */
         #[Field(FieldType::NUMBER)]
-        public readonly int $id,
+        public int $id,
 
         /** @var string $name The name for this resource. */
         #[Field(FieldType::STRING)]
-        public readonly string $name,
+        public string $name,
 
         /** @var bool $official Whether or not the games are published in this language. */
         #[Field(FieldType::BOOLEAN)]
-        public readonly bool $official,
+        public bool $official,
 
         /** @var string $iso639 The two-letter code of the country where this language is spoken. Note that it is not unique. */
         #[Field(FieldType::STRING)]
-        public readonly string $iso639,
+        public string $iso639,
 
         /** @var string $iso3166 The two-letter code of the language. Note that it is not unique. */
         #[Field(FieldType::STRING)]
-        public readonly string $iso3166,
+        public string $iso3166,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::COLLECTION, definition: Name::class)]
-        public readonly Collection $names,
+        public Collection $names,
     ) {
     }
 }

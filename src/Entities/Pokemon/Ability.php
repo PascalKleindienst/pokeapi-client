@@ -58,7 +58,7 @@ final readonly class Ability extends Entity
         #[Field(FieldType::COLLECTION, apiName: 'effect_changes', definition: AbilityEffectChange::class)]
         public Collection $effectChanges,
 
-        /** @var Collection<Collection<AbilityFlavorText>> $flavorTextEntries The flavor text of this ability listed in different languages. */
+        /** @var Collection<AbilityFlavorText> $flavorTextEntries The flavor text of this ability listed in different languages. */
         #[Field(FieldType::TRANSLATION, apiName: 'flavor_text_entries', definition: AbilityFlavorText::class)]
         public Collection $flavorTextEntries,
 

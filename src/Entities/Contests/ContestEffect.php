@@ -38,11 +38,11 @@ final readonly class ContestEffect extends Entity
         #[Field(FieldType::NUMBER)]
         public int $jam,
 
-        /** @var Collection<Collection<Effect>> $effects The result of this contest effect listed in different languages. */
+        /** @var Collection<Effect> $effects The result of this contest effect listed in different languages. */
         #[Field(FieldType::TRANSLATION, 'effect_entries', definition: Effect::class)]
         public Collection $effects,
 
-        /** @var Collection<Collection<FlavorText>> $flavorTexts The flavor text of this contest effect listed in different languages. */
+        /** @var Collection<FlavorText> $flavorTexts The flavor text of this contest effect listed in different languages. */
         #[Field(FieldType::TRANSLATION, 'flavor_text_entries', definition: FlavorText::class)]
         public Collection $flavorTexts,
     ) {

@@ -27,6 +27,7 @@ final readonly class FlavorText extends Entity
         /** @var ProxyEndpoint<Language>|Language $language The language this name is in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Language::class)]
         public ProxyEndpoint|Language $language,
+        public string $locale,
 
         /** @var ProxyEndpoint<Version>|Version $version The game version this flavor text is extracted from. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Version::class)]

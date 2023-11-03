@@ -43,7 +43,7 @@ final readonly class ItemCategory extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE, definition: ItemPocket::class)]
         public ProxyEndpoint|ItemPocket $pocket,
 
-        /** @var Collection<Collection<Name>> $names The name of this resource listed in different languages. */
+        /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
     ) {

@@ -106,18 +106,15 @@ final readonly class Field
     }
 
     /**
-     * @return Collection<Collection<Entity>> Return Entity Translation grouped by their language
+     * @return Collection<Entity>
      */
     public function getTranslation(EntityManager $manager, array $data): Collection
     {
-        /** @var Collection<Collection<Entity>> $collection */
+        /** @var Collection<Entity> $collection */
         $collection = new Collection();
         foreach ($data as $resource) {
-            if (!$collection->has($resource['language']['name'])){
-                $collection->set($resource['language']['name'], new Collection());
-            }
-
-            $collection->get($resource['language']['name'])?->add($this->createEntity($manager, $resource));
+            $resource['locale'] = $resource['language']['name'];
+            $collection->add($this->createEntity($manager, $resource));
         }
 
         return $collection;

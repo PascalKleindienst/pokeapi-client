@@ -37,7 +37,7 @@ final readonly class ItemFlingEffect extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Item::class)]
         public Collection $items,
 
-        /** @var Collection<Collection<Effect>> $effectEntries The result of this fling effect listed in different languages. */
+        /** @var Collection<Effect> $effectEntries The result of this fling effect listed in different languages. */
         #[Field(FieldType::TRANSLATION, apiName: 'effect_entries', definition: Effect::class)]
         public Collection $effectEntries,
     ) {

@@ -34,7 +34,7 @@ final readonly class SuperContestEffect extends Entity
         #[Field(FieldType::NUMBER)]
         public int $appeal,
 
-        /** @var Collection<Collection<FlavorText>> $flavorTexts The flavor text of this contest effect listed in different languages. */
+        /** @var Collection<FlavorText> $flavorTexts The flavor text of this contest effect listed in different languages. */
         #[Field(FieldType::TRANSLATION, 'flavor_text_entries', definition: FlavorText::class)]
         public Collection $flavorTexts,
 

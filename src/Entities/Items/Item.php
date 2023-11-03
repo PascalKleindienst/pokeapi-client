@@ -60,11 +60,11 @@ final readonly class Item extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE, definition: ItemCategory::class)]
         public ProxyEndpoint|ItemCategory $category,
 
-        /** @var Collection<Collection<VerboseEffect>> $effectEntries The name of this resource listed in different languages. */
+        /** @var Collection<VerboseEffect> $effectEntries The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, apiName: 'effect_entries', definition: VerboseEffect::class)]
         public Collection $effectEntries,
 
-        /** @var Collection<Collection<VersionGroupFlavorText>> $flavorTextEntries The flavor text of this ability listed in different languages. */
+        /** @var Collection<VersionGroupFlavorText> $flavorTextEntries The flavor text of this ability listed in different languages. */
         #[Field(FieldType::TRANSLATION, apiName: 'flavor_text_entries', definition: VersionGroupFlavorText::class)]
         public Collection $flavorTextEntries,
 
@@ -72,7 +72,7 @@ final readonly class Item extends Entity
         #[Field(FieldType::COLLECTION, apiName: 'game_indices', definition: GenerationGameIndex::class)]
         public Collection $gameIndices,
 
-        /** @var Collection<Collection<Name>> $names The name of this resource listed in different languages. */
+        /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
 

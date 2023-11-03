@@ -81,7 +81,7 @@ final readonly class Move extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'damage_class', definition: MoveDamageClass::class)]
         public ProxyEndpoint|MoveDamageClass $damageClass,
 
-        /** @var Collection<Collection<VerboseEffect>> $effectEntries The effect of this move listed in different languages. */
+        /** @var Collection<VerboseEffect> $effectEntries The effect of this move listed in different languages. */
         #[Field(FieldType::TRANSLATION, apiName: 'effect_entries', definition: VerboseEffect::class)]
         public Collection $effectEntries,
 
@@ -93,7 +93,7 @@ final readonly class Move extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'learned_by_pokemon', definition: Pokemon::class)]
         public Collection $learnedByPokemon,
 
-        /** @var Collection<Collection<MoveFlavorText>> $flavorTextEntries The flavor text of this move listed in different languages. */
+        /** @var Collection<MoveFlavorText> $flavorTextEntries The flavor text of this move listed in different languages. */
         #[Field(FieldType::TRANSLATION, apiName: 'flavor_text_entries', definition: MoveFlavorText::class)]
         public Collection $flavorTextEntries,
 
