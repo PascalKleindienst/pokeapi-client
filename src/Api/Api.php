@@ -11,6 +11,7 @@ use League\Flysystem\Filesystem;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\EntityManager;
 use PokeDB\PokeApiClient\Exceptions\NetworkException;
+use PokeDB\PokeApiClient\Utils\Collection;
 use Psr\SimpleCache\CacheInterface;
 use ReflectionClass;
 use ReflectionException;
@@ -52,27 +53,8 @@ class Api
      */
     public function get(string $entity, string|int $identifier): Entity
     {
-        if (!is_a($entity, Entity::class, true)) {
-            throw new TypeError('Invalid type for parameter $entity. Expected ' . Entity::class . ' got ' . $entity);
-        }
-
-        if (!\array_key_exists($entity, $this->refClasses)) {
-            $this->refClasses[$entity] = new ReflectionClass($entity);
-        }
-
-        $endpoint = strtolower($this->refClasses[$entity]->getShortName());
-
-        $attributes = $this->refClasses[$entity]->getAttributes(Endpoint::class);
-        if (!empty($attributes)) {
-            $endpointAttr = $attributes[0]->newInstance();
-            $endpoint = $endpointAttr->resource->value;
-        }
-
-        $url = sprintf('%s%s/%s', $this->url, $endpoint, $identifier);
-        if (str_contains($endpoint, '%s')) {
-            $endpoint = sprintf($endpoint, $identifier);
-            $url = sprintf('%s%s', $this->url, $endpoint);
-        }
+        $this->validateEntity($entity);
+        $url = $this->getUrl($entity, $identifier);
 
         // Get from cache
         $cacheKey = hash('sha256', urlencode($url));
@@ -87,7 +69,89 @@ class Api
         return $this->entityManager->create($entity, $data);
     }
 
-    public function all(string $entity, int $limit = 20, int $offset = 0): void
+    /**
+     * @param class-string<T> $entity
+     * @psalm-return ResourceList<T>
+     * @throws JsonException
+     * @throws NetworkException
+     * @throws ReflectionException
+     */
+    public function all(string $entity, int $limit = 20, int $offset = 0): ResourceList
     {
+        $this->validateEntity($entity);
+        $url = $this->getUrl($entity);
+        $url .= '?' . http_build_query(['limit' => $limit, 'offset' => $offset]);
+
+        // Get from cache
+        $cacheKey = hash('sha256', urlencode($url));
+        if ($this->cache->has($cacheKey)) {
+            $data = $this->cache->get($cacheKey);
+            return $this->createResourceList($entity, (array) $data);
+        }
+
+        $data = $this->client->request($url);
+        $this->cache->set($cacheKey, $data);
+
+        return $this->createResourceList($entity, $data);
+    }
+
+    /**
+     * @param class-string<T> $entity
+     * @return void
+     */
+    protected function validateEntity(string $entity): void
+    {
+        if (!is_a($entity, Entity::class, true)) {
+            throw new TypeError('Invalid type for parameter $entity. Expected ' . Entity::class . ' got ' . $entity);
+        }
+    }
+
+    /**
+     * @param class-string<T> $entity
+     * @throws ReflectionException
+     */
+    protected function getUrl(string $entity, string|int|null $identifier = null): string
+    {
+        if (!\array_key_exists($entity, $this->refClasses)) {
+            $this->refClasses[$entity] = new ReflectionClass($entity);
+        }
+
+        $endpoint = strtolower($this->refClasses[$entity]->getShortName());
+
+        $attributes = $this->refClasses[$entity]->getAttributes(Endpoint::class);
+        if (!empty($attributes)) {
+            $endpointAttr = $attributes[0]->newInstance();
+            $endpoint = $endpointAttr->resource->value;
+        }
+
+        $url = sprintf('%s%s/%s', $this->url, $endpoint, $identifier ?? '');
+        if ($identifier && str_contains($endpoint, '%s')) {
+            $endpoint = sprintf($endpoint, $identifier);
+            $url = sprintf('%s%s', $this->url, $endpoint);
+        }
+
+        return $url;
+    }
+
+    /**
+     * @param class-string<T> $entity
+     * @psalm-return ResourceList<T>
+     */
+    protected function createResourceList(string $entity, array $data = []): ResourceList
+    {
+        $result = $data['results'] ?? [];
+        foreach ($result as $key => $resource) {
+            $result[$key] = new ProxyEndpoint($this->entityManager, $entity, $resource);
+        }
+
+        /** @var ResourceList<T> $resourceList */
+        $resourceList = new ResourceList(
+            $data['count'] ?? 0,
+            $data['next'] ?? null,
+            $data['previous'] ?? null,
+            $result,
+        );
+
+        return $resourceList;
     }
 }
