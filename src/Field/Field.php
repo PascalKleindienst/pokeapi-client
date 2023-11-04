@@ -80,10 +80,14 @@ final readonly class Field
         return $collection;
     }
 
-    private function getApiResource(EntityManager $manager, array $resource): ProxyEndpoint
+    private function getApiResource(EntityManager $manager, array $resource): ?ProxyEndpoint
     {
         if ($this->definition === null) {
             throw new InvalidArgumentException('Cannot resolve value. Missing definition');
+        }
+
+        if (empty($resource)) {
+            return null;
         }
 
         /** @var class-string<Entity> $entity */

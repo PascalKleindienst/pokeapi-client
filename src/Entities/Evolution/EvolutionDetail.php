@@ -24,9 +24,9 @@ final readonly class EvolutionDetail extends Entity
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        /** @var ProxyEndpoint<Item>|Item $item The item required to cause evolution this into Pokémon species. */
+        /** @var ProxyEndpoint<Item>|Item|null $item The item required to cause evolution this into Pokémon species. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Item::class)]
-        public ProxyEndpoint|Item $item,
+        public ProxyEndpoint|Item|null $item,
 
         /** @var ProxyEndpoint<EvolutionTrigger>|EvolutionTrigger $trigger The type of event that triggers evolution into this Pokémon species. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: EvolutionTrigger::class)]
@@ -36,21 +36,21 @@ final readonly class EvolutionDetail extends Entity
         #[Field(FieldType::NUMBER)]
         public int $gender,
 
-        /** @var ProxyEndpoint<Item>|Item $heldItem The item the evolving Pokémon species must be holding during the evolution trigger event to evolve into this Pokémon species. */
+        /** @var ProxyEndpoint<Item>|Item|null $heldItem The item the evolving Pokémon species must be holding during the evolution trigger event to evolve into this Pokémon species. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'held_item', definition: Item::class)]
-        public ProxyEndpoint|Item $heldItem,
+        public ProxyEndpoint|Item|null $heldItem,
 
-        /** @var ProxyEndpoint<Move>|Move $knownMove The move that must be known by the evolving Pokémon species during the evolution trigger event in order to evolve into this Pokémon species. */
+        /** @var ProxyEndpoint<Move>|Move|null $knownMove The move that must be known by the evolving Pokémon species during the evolution trigger event in order to evolve into this Pokémon species. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'known_move', definition: Move::class)]
-        public ProxyEndpoint|Move $knownMove,
+        public ProxyEndpoint|Move|null $knownMove,
 
-        /** @var ProxyEndpoint<Type>|Type $knownMoveType The evolving Pokémon species must know a move with this type during the evolution trigger event in order to evolve into this Pokémon species. */
+        /** @var ProxyEndpoint<Type>|Type|null $knownMoveType The evolving Pokémon species must know a move with this type during the evolution trigger event in order to evolve into this Pokémon species. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'known_move_type', definition: Type::class)]
-        public ProxyEndpoint|Type $knownMoveType,
+        public ProxyEndpoint|Type|null $knownMoveType,
 
-        /** @var ProxyEndpoint<Location>|Location $location The location the evolution must be triggered at. */
+        /** @var ProxyEndpoint<Location>|Location|null $location The location the evolution must be triggered at. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Location::class)]
-        public ProxyEndpoint|Location $location,
+        public ProxyEndpoint|Location|null $location,
 
         /** @var int $minLevel The minimum required level of the evolving Pokémon species to evolve into this Pokémon species. */
         #[Field(FieldType::NUMBER, apiName: 'min_level')]
@@ -72,25 +72,25 @@ final readonly class EvolutionDetail extends Entity
         #[Field(FieldType::BOOLEAN, apiName: 'needs_overworld_rain')]
         public bool $needsOverworldRain,
 
-        /** @var ProxyEndpoint<PokemonSpecies>|PokemonSpecies $partySpecies The Pokémon species that must be in the players party in order for the evolving Pokémon species to evolve into this Pokémon species. */
+        /** @var ProxyEndpoint<PokemonSpecies>|PokemonSpecies|null $partySpecies The Pokémon species that must be in the players party in order for the evolving Pokémon species to evolve into this Pokémon species. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'party_species', definition: PokemonSpecies::class)]
-        public ProxyEndpoint|PokemonSpecies $partySpecies,
+        public ProxyEndpoint|PokemonSpecies|null $partySpecies,
 
-        /** @var ProxyEndpoint<Type>|Type $partyType The player must have a Pokémon of this type in their party during the evolution trigger event in order for the evolving Pokémon species to evolve into this Pokémon species. */
+        /** @var ProxyEndpoint<Type>|Type|null $partyType The player must have a Pokémon of this type in their party during the evolution trigger event in order for the evolving Pokémon species to evolve into this Pokémon species. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'party_type', definition: Type::class)]
-        public ProxyEndpoint|Type $partyType,
+        public ProxyEndpoint|Type|null $partyType,
 
         /** @var int $relativePhysicalStats The required relation between the Pokémon's Attack and Defense stats. 1 means Attack > Defense. 0 means Attack = Defense. -1 means Attack < Defense. */
         #[Field(FieldType::NUMBER, apiName: 'relative_physical_stats')]
         public int $relativePhysicalStats,
 
-        /** @var string $timeOfDay The required time of day. Day or night. */
+        /** @var ?string $timeOfDay The required time of day. Day or night. */
         #[Field(FieldType::STRING, apiName: 'time_of_day')]
-        public string $timeOfDay,
+        public ?string $timeOfDay,
 
-        /** @var ProxyEndpoint<PokemonSpecies>|PokemonSpecies $tradeSpecies Pokémon species for which this one must be traded. */
+        /** @var ProxyEndpoint<PokemonSpecies>|PokemonSpecies|null $tradeSpecies Pokémon species for which this one must be traded. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'trade_species', definition: PokemonSpecies::class)]
-        public ProxyEndpoint|PokemonSpecies $tradeSpecies,
+        public ProxyEndpoint|PokemonSpecies|null $tradeSpecies,
 
         /** @var bool $turnUpsideDown Whether or not the 3DS needs to be turned upside-down as this Pokémon levels up. */
         #[Field(FieldType::BOOLEAN, apiName: 'turn_upside_down')]

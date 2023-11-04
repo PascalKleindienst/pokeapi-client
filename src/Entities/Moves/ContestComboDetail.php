@@ -19,13 +19,13 @@ final readonly class ContestComboDetail extends Entity
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        /** @var ProxyEndpoint<Move>|Move $useBefore A list of moves to use before this move. */
+        /** @var ProxyEndpoint<Move>|Move|null $useBefore A list of moves to use before this move. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'use_before', definition: Move::class)]
-        public ProxyEndpoint|Move $useBefore,
+        public ProxyEndpoint|Move|null $useBefore,
 
-        /** @var ProxyEndpoint<Move>|Move $useAfter A list of moves to use after this move. */
+        /** @var ProxyEndpoint<Move>|Move|null $useAfter A list of moves to use after this move. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'use_after', definition: Move::class)]
-        public ProxyEndpoint|Move $useAfter,
+        public ProxyEndpoint|Move|null $useAfter,
     ) {
     }
 }

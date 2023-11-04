@@ -30,9 +30,9 @@ final readonly class EvolutionChain extends Entity
         #[Field(FieldType::NUMBER)]
         public int $id,
 
-        /** @var ProxyEndpoint<Item>|Item $babyTriggerItem The item that a Pokémon would be holding when mating that would trigger the egg hatching a baby Pokémon rather than a basic Pokémon. */
+        /** @var ProxyEndpoint<Item>|Item|null $babyTriggerItem The item that a Pokémon would be holding when mating that would trigger the egg hatching a baby Pokémon rather than a basic Pokémon. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'baby_trigger_item', definition: Item::class)]
-        public ProxyEndpoint|Item $babyTriggerItem,
+        public ProxyEndpoint|Item|null $babyTriggerItem,
 
         /** @var ChainLink $chain The base chain link object. Each link contains evolution details for a Pokémon in the chain. Each link references the next Pokémon in the natural evolution order. */
         #[Field(FieldType::ENTITY, definition: ChainLink::class)]
