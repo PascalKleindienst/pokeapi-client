@@ -43,7 +43,8 @@ final readonly class Field
         $value = $data[$property] ?? null;
 
         return match ($this->type) {
-            FieldType::STRING => (string) ($value ?? ''),
+            FieldType::STRING => empty($value) ? null : (string) $value,
+            FieldType::BOOLEAN => (bool) $value,
             FieldType::NUMBER => (int) $value,
             FieldType::LIST => (array) $value,
             FieldType::ENTITY => $this->createEntity($entityManager, $value ?? []),
@@ -51,7 +52,6 @@ final readonly class Field
             FieldType::TRANSLATION => $this->getTranslation($entityManager, $value ?? []),
             FieldType::NAMED_API_RESOURCE => $this->getApiResource($entityManager, $value ?? []),
             FieldType::NAMED_API_RESOURCE_LIST => $this->getApiResourceList($entityManager, $value ?? []),
-            default => $value
         };
     }
 
@@ -92,10 +92,14 @@ final readonly class Field
     }
 
     /**
-     * @return Collection<Entity>
+     * @return Collection<Entity>|Collection<mixed>
      */
     private function getCollection(EntityManager $manager, array $data): Collection
     {
+        if (empty($this->definition)) {
+            return new Collection($data);
+        }
+
         /** @var Collection<Entity> $collection */
         $collection = new Collection();
         foreach ($data as $resource) {
