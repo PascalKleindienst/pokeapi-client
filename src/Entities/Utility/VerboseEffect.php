@@ -12,7 +12,7 @@ use PokeDB\PokeApiClient\Field\FieldType;
 /**
  * @see https://pokeapi.co/docs/v2#verboseeffect
  */
-final readonly class VerboseEffect extends Entity
+final readonly class VerboseEffect extends Entity implements Translateable
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
@@ -32,5 +32,10 @@ final readonly class VerboseEffect extends Entity
         public ProxyEndpoint|Language $language,
         public string $locale,
     ) {
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
 }

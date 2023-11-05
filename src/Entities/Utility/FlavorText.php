@@ -13,7 +13,7 @@ use PokeDB\PokeApiClient\Field\FieldType;
 /**
  * @see https://pokeapi.co/docs/v2#flavortext
  */
-final readonly class FlavorText extends Entity
+final readonly class FlavorText extends Entity implements Translateable
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
@@ -33,5 +33,10 @@ final readonly class FlavorText extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Version::class)]
         public ProxyEndpoint|Version $version,
     ) {
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
 }

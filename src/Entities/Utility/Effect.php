@@ -12,7 +12,7 @@ use PokeDB\PokeApiClient\Field\FieldType;
 /**
  * @see https://pokeapi.co/docs/v2#effect
  */
-final readonly class Effect extends Entity
+final readonly class Effect extends Entity implements Translateable
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
@@ -28,5 +28,10 @@ final readonly class Effect extends Entity
         public ProxyEndpoint|Language $language,
         public string $locale,
     ) {
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
 }

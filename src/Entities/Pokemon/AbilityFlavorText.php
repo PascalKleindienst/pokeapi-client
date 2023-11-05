@@ -35,4 +35,9 @@ final readonly class AbilityFlavorText extends Entity
         public ProxyEndpoint|VersionGroup $versionGroup,
     ) {
     }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
 }

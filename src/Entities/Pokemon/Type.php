@@ -56,9 +56,9 @@ final readonly class Type extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Generation::class)]
         public ProxyEndpoint|Generation $generation,
 
-        /** @var ProxyEndpoint<MoveDamageClass>|MoveDamageClass $moveDamageClass The class of damage this stat is directly related to. */
+        /** @var ProxyEndpoint<MoveDamageClass>|MoveDamageClass|null $moveDamageClass The class of damage this stat is directly related to. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'move_damage_class', definition: MoveDamageClass::class)]
-        public ProxyEndpoint|MoveDamageClass $moveDamageClass,
+        public ProxyEndpoint|MoveDamageClass|null $moveDamageClass,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]

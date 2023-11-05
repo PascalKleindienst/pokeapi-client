@@ -59,7 +59,7 @@ final readonly class Pokedex extends Entity
         public ProxyEndpoint|Region $region,
 
         /** @var Collection<VersionGroup> $versionGroups A list of version groups this Pokédex is relevant to. */
-        #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: VersionGroup::class)]
+        #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'version_groups', definition: VersionGroup::class)]
         public Collection $versionGroups,
     ) {
     }

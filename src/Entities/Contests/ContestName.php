@@ -7,10 +7,11 @@ namespace PokeDB\PokeApiClient\Entities\Contests;
 use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Language;
+use PokeDB\PokeApiClient\Entities\Utility\Translateable;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
 
-final readonly class ContestName extends Entity
+final readonly class ContestName extends Entity implements Translateable
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
@@ -30,5 +31,10 @@ final readonly class ContestName extends Entity
         public ProxyEndpoint|Language $language,
         public string $locale
     ) {
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
 }

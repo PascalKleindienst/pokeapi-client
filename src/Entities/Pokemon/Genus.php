@@ -7,13 +7,14 @@ namespace PokeDB\PokeApiClient\Entities\Pokemon;
 use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Language;
+use PokeDB\PokeApiClient\Entities\Utility\Translateable;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
 
 /**
  * @see https://pokeapi.co/docs/v2#genus
  */
-final readonly class Genus extends Entity
+final readonly class Genus extends Entity implements Translateable
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
@@ -29,5 +30,10 @@ final readonly class Genus extends Entity
         public ProxyEndpoint|Language $language,
         public string $locale,
     ) {
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
 }

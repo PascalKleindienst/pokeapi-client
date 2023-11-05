@@ -8,13 +8,14 @@ use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Games\VersionGroup;
 use PokeDB\PokeApiClient\Entities\Utility\Language;
+use PokeDB\PokeApiClient\Entities\Utility\Translateable;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
 
 /**
  * @see https://pokeapi.co/docs/v2#moveflavortext
  */
-final readonly class MoveFlavorText extends Entity
+final readonly class MoveFlavorText extends Entity implements Translateable
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
@@ -34,5 +35,10 @@ final readonly class MoveFlavorText extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'version_group', definition: VersionGroup::class)]
         public ProxyEndpoint|VersionGroup $versionGroup,
     ) {
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
 }
