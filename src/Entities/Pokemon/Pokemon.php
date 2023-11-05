@@ -63,7 +63,7 @@ final readonly class Pokemon extends Entity
         public Collection $abilities,
 
         /** @var Collection<PokemonForm> $forms A list of forms this Pokémon can take on. */
-        #[Field(FieldType::COLLECTION, definition: PokemonForm::class)]
+        #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: PokemonForm::class)]
         public Collection $forms,
 
         /** @var Collection<VersionGameIndex> $gameIndices A list of game indices relevent to Pokémon item by generation. */

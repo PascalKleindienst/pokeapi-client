@@ -24,9 +24,9 @@ final readonly class VersionGameIndex extends Entity
         #[Field(FieldType::NUMBER, apiName: 'game_index')]
         public int $gameIndex,
 
-        /** @var ProxyEndpoint<Version>|Version $generation The version relevent to this game index. */
+        /** @var ProxyEndpoint<Version>|Version $version The version relevent to this game index. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Version::class)]
-        public ProxyEndpoint|Version $generation,
+        public ProxyEndpoint|Version $version,
     ) {
     }
 }
