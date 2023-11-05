@@ -58,6 +58,11 @@ final class ProxyEndpoint implements JsonSerializable
         return $this->resource;
     }
 
+    public function getIdentifier(): string
+    {
+        return $this->identifier;
+    }
+
     public function __isset(string $property): bool
     {
         return isset($this->getInstance()->$property);
