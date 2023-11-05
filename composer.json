@@ -16,11 +16,11 @@
     "require": {
         "php": "^8.2.0",
         "ext-curl": "*",
-        "psr/cache": "^2.0.0",
-        "cache/filesystem-adapter": "^1.2"
+        "psr/cache": "^2.0.0|^3.0.0",
+        "symfony/cache": "^6.3"
     },
     "scripts": {
-        "test": "phpunit --coverage-text",
+        "test": "XDEBUG_MODE=coverage phpunit --coverage-text",
         "phpcs": [
             "phpcs --standard=.phpcs.xml -s"
         ],

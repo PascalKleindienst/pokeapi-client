@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Api;
 
-use Cache\Adapter\Filesystem\FilesystemCachePool;
 use JsonException;
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\Filesystem;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\EntityManager;
 use PokeDB\PokeApiClient\Exceptions\NetworkException;
-use PokeDB\PokeApiClient\Utils\Collection;
-use Psr\SimpleCache\CacheInterface;
 use ReflectionClass;
 use ReflectionException;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Contracts\Cache\CacheInterface;
 use TypeError;
 
 /**
@@ -31,14 +28,11 @@ class Api
      */
     private array $refClasses = [];
 
-    protected CacheInterface $cache;
-
     public function __construct(
         private readonly string $url = self::API_ENDPOINT,
         private readonly ClientInterface $client = new HttpClient(),
-        CacheInterface $cache = null
+        private readonly CacheInterface $cache = new FilesystemAdapter('pokeapi')
     ) {
-        $this->cache = $cache ?: new FilesystemCachePool(new Filesystem(new Local('pokeapi')));
         $this->entityManager = new EntityManager($this);
     }
 
@@ -58,13 +52,16 @@ class Api
 
         // Get from cache
         $cacheKey = hash('sha256', urlencode($url));
-        if ($this->cache->has($cacheKey)) {
-            $data = $this->cache->get($cacheKey);
+        $cache = $this->cache->getItem($cacheKey);
+
+        if ($cache->isHit()) {
+            $data = $cache->get();
             return $this->entityManager->create($entity, (array) $data);
         }
 
         $data = $this->client->request($url);
-        $this->cache->set($cacheKey, $data);
+        $cache->set($data);
+        $this->cache->save($cache);
 
         return $this->entityManager->create($entity, $data);
     }
@@ -84,13 +81,16 @@ class Api
 
         // Get from cache
         $cacheKey = hash('sha256', urlencode($url));
-        if ($this->cache->has($cacheKey)) {
-            $data = $this->cache->get($cacheKey);
+        $cache = $this->cache->getItem($cacheKey);
+
+        if ($cache->isHit()) {
+            $data = $cache->get();
             return $this->createResourceList($entity, (array) $data);
         }
 
         $data = $this->client->request($url);
-        $this->cache->set($cacheKey, $data);
+        $cache->set($data);
+        $this->cache->save($cache);
 
         return $this->createResourceList($entity, $data);
     }
