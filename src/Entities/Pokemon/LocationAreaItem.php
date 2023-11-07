@@ -19,14 +19,20 @@ use PokeDB\PokeApiClient\Utils\Collection;
  *
  * @see https://pokeapi.co/docs/v2#pokemon-location-areas
  */
-#[Endpoint(Resource::POKEMON_LOCATION_AREA)]
-final readonly class LocationAreaEncounter extends Entity
+final readonly class LocationAreaItem extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function __construct(public Collection $locationAreas)
-    {
+    public function __construct(
+        /** @var ProxyEndpoint<LocationArea>|LocationArea $locationArea The location area the referenced Pokémon can be encountered in. */
+        #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'location_area', definition: LocationArea::class)]
+        public ProxyEndpoint|LocationArea $locationArea,
+
+        /** @var Collection<VersionEncounterDetail> $versionDetails A list of versions and encounters with the referenced Pokémon that might happen. */
+        #[Field(FieldType::COLLECTION, apiName: 'version_details', definition: VersionEncounterDetail::class)]
+        public Collection $versionDetails,
+    ) {
     }
 }

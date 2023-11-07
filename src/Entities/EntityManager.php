@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities;
 
 use PokeDB\PokeApiClient\Api\Api;
+use PokeDB\PokeApiClient\Entities\Pokemon\LocationAreaEncounter;
+use PokeDB\PokeApiClient\Entities\Pokemon\LocationAreaItem;
 use PokeDB\PokeApiClient\Field\Field;
+use PokeDB\PokeApiClient\Utils\Collection;
 use ReflectionClass;
 
 final class EntityManager
@@ -48,6 +51,17 @@ final class EntityManager
                 $field = $attr->newInstance();
                 $constructor[$name] = $field->getParameters($this, $data, $name) ?? $constructor[$name];
             }
+        }
+
+        // Location Areas are different than any other entity...
+        if ($entity === LocationAreaEncounter::class) {
+            /** @var Collection<LocationAreaItem> $params */
+            $params = new Collection();
+            foreach ($data as $item) {
+                $params->add($this->create(LocationAreaItem::class, $item));
+            }
+
+            $constructor = [$params];
         }
 
         /** @var T $instance */

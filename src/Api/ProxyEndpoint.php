@@ -35,7 +35,7 @@ final class ProxyEndpoint implements JsonSerializable
         private readonly array $resource
     ) {
         $this->definition = $definition;
-        $this->identifier = $resource['name'] ?? $resource['url'] ?? '';
+        $this->identifier = $resource['name'] ?? pathinfo($this->resource['url'] ?? '', PATHINFO_FILENAME) ?? '';
     }
 
     /**
