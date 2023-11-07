@@ -157,6 +157,18 @@ class Collection implements IteratorAggregate, Countable, JsonSerializable
     }
 
     /**
+     * @param callable(T): void $callback
+     */
+    public function each(callable $callback): self
+    {
+        foreach ($this->getIterator() as $element) {
+            $callback($element);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return self<list<T>>
      */
     public function groupBy(string $column): self

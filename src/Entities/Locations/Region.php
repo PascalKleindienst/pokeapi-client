@@ -46,9 +46,9 @@ final readonly class Region extends Entity
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
 
-        /** @var ProxyEndpoint<Generation>|Generation $mainGeneration The generation this region was introduced in. */
+        /** @var ProxyEndpoint<Generation>|Generation|null $mainGeneration The generation this region was introduced in. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'main_generation', definition: Generation::class)]
-        public ProxyEndpoint|Generation $mainGeneration,
+        public ProxyEndpoint|Generation|null $mainGeneration,
 
         /** @var Collection<Pokedex> $pokedexes A list of pokédexes that catalogue Pokémon in this region. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Pokedex::class)]

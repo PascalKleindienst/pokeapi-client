@@ -54,9 +54,9 @@ final readonly class Pokedex extends Entity
         #[Field(FieldType::COLLECTION, apiName: 'pokemon_entries', definition: PokemonEntry::class)]
         public Collection $pokemonEntries,
 
-        /** @var ProxyEndpoint<Region>|Region $region The region this Pokédex catalogues Pokémon for. */
+        /** @var ProxyEndpoint<Region>|Region|null $region The region this Pokédex catalogues Pokémon for. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Region::class)]
-        public ProxyEndpoint|Region $region,
+        public ProxyEndpoint|Region|null $region,
 
         /** @var Collection<VersionGroup> $versionGroups A list of version groups this Pokédex is relevant to. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'version_groups', definition: VersionGroup::class)]

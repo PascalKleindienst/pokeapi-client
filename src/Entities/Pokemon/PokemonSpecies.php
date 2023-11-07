@@ -98,9 +98,9 @@ final readonly class PokemonSpecies extends Entity
         #[Field(FieldType::NAMED_API_RESOURCE, definition: PokemonColor::class)]
         public ProxyEndpoint|PokemonColor $color,
 
-        /** @var ProxyEndpoint<PokemonShape>|PokemonShape $shape The shape of this Pokémon for Pokédex search. */
+        /** @var ProxyEndpoint<PokemonShape>|PokemonShape|null $shape The shape of this Pokémon for Pokédex search. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: PokemonShape::class)]
-        public ProxyEndpoint|PokemonShape $shape,
+        public ProxyEndpoint|PokemonShape|null $shape,
 
         /** @var ProxyEndpoint<PokemonSpecies>|PokemonSpecies|null $evolvesFromSpecies The Pokémon species that evolves into this Pokemon_species.  */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'evolves_from_species', definition: PokemonSpecies::class)]
