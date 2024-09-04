@@ -13,9 +13,10 @@ use JsonSerializable;
  * Simple Collection Data Structure.
  *
  * @template T
+ *
  * @template-implements IteratorAggregate<T>
  */
-class Collection implements IteratorAggregate, Countable, JsonSerializable
+class Collection implements Countable, IteratorAggregate, JsonSerializable
 {
     /**
      * @var array<T>
@@ -23,7 +24,7 @@ class Collection implements IteratorAggregate, Countable, JsonSerializable
     protected array $elements = [];
 
     /**
-     * @param iterable<int|string, T> $elements
+     * @param  iterable<int|string, T>  $elements
      */
     public function __construct(iterable $elements = [])
     {
@@ -60,10 +61,9 @@ class Collection implements IteratorAggregate, Countable, JsonSerializable
     }
 
     /**
-     * Get an element from the collection.
+     * Get an element from the collection
      *
-     * @psalm-param int|string $key
-     * @psalm-return T|null $element
+     * @return T|null $element
      */
     public function get(string|int $key): mixed
     {
@@ -140,24 +140,24 @@ class Collection implements IteratorAggregate, Countable, JsonSerializable
     }
 
     /**
-     * @param callable(T): bool $filter
+     * @param  callable(T): bool  $filter
      * @return self<T>
      */
     public function filter(callable $filter): self
     {
-        return new self(array_filter($this->elements, $filter));
+        return new self(array_filter($this->all(), $filter));
     }
 
     /**
-     * @param callable(T): bool $callback
+     * @param  callable(T): mixed  $callback
      */
     public function map(callable $callback): self
     {
-        return new self(array_map($callback, $this->elements));
+        return new self(array_map($callback, $this->all()));
     }
 
     /**
-     * @param callable(T): void $callback
+     * @param  callable(T): void  $callback
      */
     public function each(callable $callback): self
     {
@@ -182,12 +182,13 @@ class Collection implements IteratorAggregate, Countable, JsonSerializable
 
         /** @var self<list<T>> $collection */
         $collection = new self($group);
+
         return $collection;
     }
 
     public function pluck(string $column, ?string $index = null): self
     {
-        return new self(array_column($this->elements, $column, $index));
+        return new self(array_column($this->all(), $column, $index));
     }
 
     public function remove(int|string $key): void

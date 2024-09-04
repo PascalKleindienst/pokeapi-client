@@ -39,7 +39,8 @@ class HttpClient implements ClientInterface
         }
 
         /** @var array $response */
-        $response = json_decode((string)$data, true, 512, JSON_THROW_ON_ERROR);
+        $response = json_decode((string) $data, true, 512, JSON_THROW_ON_ERROR);
+
         return $response;
     }
 }

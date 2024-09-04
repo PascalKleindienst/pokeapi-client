@@ -56,4 +56,5 @@ enum Resource: string
     case POKEMON_SPECIES = 'pokemon-species';
     case STAT = 'stat';
     case TYPE = 'type';
+    case NONE = '';
 }
