@@ -11,6 +11,7 @@ use PokeDB\PokeApiClient\Entities\Utility\Description;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -19,10 +20,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#movelearnmethod
  */
 #[Endpoint(Resource::MOVE_TARGET)]
-final readonly class MoveTarget extends Entity
+final class MoveTarget extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -34,9 +36,9 @@ final readonly class MoveTarget extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var Collection<Move> $moves A list of moves that that are directed at this target. */
+        /** @var ApiResourceCollection<Move> $moves A list of moves that that are directed at this target. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Move::class)]
-        public Collection $moves,
+        public ApiResourceCollection $moves,
 
         /** @var Collection<Description> $descriptions The description of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Description::class)]

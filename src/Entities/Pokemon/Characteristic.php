@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Description;
@@ -22,10 +21,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#stat
  */
 #[Endpoint(Resource::CHARACTERISTIC)]
-final readonly class Characteristic extends Entity
+final class Characteristic extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -41,9 +41,9 @@ final readonly class Characteristic extends Entity
         #[Field(FieldType::LIST, apiName: 'possible_values')]
         public array $possibleValues,
 
-        /** @var ProxyEndpoint<Stat>|Stat $highestStat The stat which results in this characteristic.. */
+        /** @var Stat $highestStat The stat which results in this characteristic.. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'highest_stat', definition: Type::class)]
-        public ProxyEndpoint|Stat $highestStat,
+        public Stat $highestStat,
 
         /** @var Collection<Description> $descriptions The descriptions of this characteristic listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Description::class)]

@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Locations;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\GenerationGameIndex;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -20,10 +20,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#location
  */
 #[Endpoint(Resource::LOCATION)]
-final readonly class Location extends Entity
+final class Location extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -35,9 +36,9 @@ final readonly class Location extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var ProxyEndpoint<Region>|Region $region The region this location can be found in. */
+        /** @var Region $region The region this location can be found in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Region::class)]
-        public ProxyEndpoint|Region $region,
+        public Region $region,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
@@ -47,9 +48,9 @@ final readonly class Location extends Entity
         #[Field(FieldType::COLLECTION, apiName: 'game_indices', definition: GenerationGameIndex::class)]
         public Collection $gameIndices,
 
-        /** @var Collection<LocationArea> $areas Areas that can be found within this location.. */
+        /** @var ApiResourceCollection<LocationArea> $areas Areas that can be found within this location.. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: LocationArea::class)]
-        public Collection $areas,
+        public ApiResourceCollection $areas,
     ) {
     }
 }

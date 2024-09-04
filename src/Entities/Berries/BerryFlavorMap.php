@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Entities\Berries;
 
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
@@ -17,10 +16,11 @@ use PokeDB\PokeApiClient\Field\FieldType;
  *
  * @see https://pokeapi.co/docs/v2#berry-flavors
  */
-final readonly class BerryFlavorMap extends Entity
+final class BerryFlavorMap extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -28,9 +28,9 @@ final readonly class BerryFlavorMap extends Entity
         #[Field(FieldType::NUMBER)]
         public int $potency,
 
-        /** @var ProxyEndpoint<BerryFlavor>|BerryFlavor $flavor The referenced berry flavor. */
+        /** @var BerryFlavor $flavor The referenced berry flavor. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: BerryFlavor::class)]
-        public ProxyEndpoint|BerryFlavor $flavor,
+        public BerryFlavor $flavor,
     ) {
     }
 }

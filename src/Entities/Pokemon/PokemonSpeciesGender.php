@@ -7,15 +7,16 @@ namespace PokeDB\PokeApiClient\Entities\Pokemon;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
-use PokeDB\PokeApiClient\Utils\Collection;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 
 /**
  * @see https://pokeapi.co/docs/v2#pokemonspeciesgender
  */
-final readonly class PokemonSpeciesGender extends Entity
+final class PokemonSpeciesGender extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -27,9 +28,9 @@ final readonly class PokemonSpeciesGender extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var Collection<PokemonSpecies> $pokemonSpecies A Pokémon species that can be the referenced gender. */
+        /** @var ApiResourceCollection<PokemonSpecies> $pokemonSpecies A Pokémon species that can be the referenced gender. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'pokemon_species', definition: PokemonSpecies::class)]
-        public Collection $pokemonSpecies,
+        public ApiResourceCollection $pokemonSpecies,
     ) {
     }
 }

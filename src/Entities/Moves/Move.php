@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Moves;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Contests\ContestEffect;
 use PokeDB\PokeApiClient\Entities\Contests\ContestType;
@@ -20,6 +19,7 @@ use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Entities\Utility\VerboseEffect;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -30,10 +30,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#move
  */
 #[Endpoint(Resource::MOVE)]
-final readonly class Move extends Entity
+final class Move extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -69,17 +70,17 @@ final readonly class Move extends Entity
         #[Field(FieldType::ENTITY, apiName: 'contest_combo', definition: ContestComboSets::class)]
         public ContestComboSets $contestCombo,
 
-        /** @var ProxyEndpoint<ContestEffect>|ContestType $contestType The type of appeal this move gives a Pokémon when used in a contest. */
+        /** @var ContestType $contestType The type of appeal this move gives a Pokémon when used in a contest. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'contest_type', definition: ContestType::class)]
-        public ProxyEndpoint|ContestType $contestType,
+        public ContestType|null $contestType,
 
-        /** @var ProxyEndpoint<ContestEffect>|ContestEffect $contestEffect The effect the move has when used in a contest. */
+        /** @var ContestEffect $contestEffect The effect the move has when used in a contest. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'contest_effect', definition: ContestEffect::class)]
-        public ProxyEndpoint|ContestEffect $contestEffect,
+        public ContestEffect|null $contestEffect,
 
-        /** @var ProxyEndpoint<MoveDamageClass>|MoveDamageClass $damageClass The type of damage the move inflicts on the target, e.g. physical. */
+        /** @var MoveDamageClass $damageClass The type of damage the move inflicts on the target, e.g. physical. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'damage_class', definition: MoveDamageClass::class)]
-        public ProxyEndpoint|MoveDamageClass $damageClass,
+        public MoveDamageClass $damageClass,
 
         /** @var Collection<VerboseEffect> $effectEntries The effect of this move listed in different languages. */
         #[Field(FieldType::TRANSLATION, apiName: 'effect_entries', definition: VerboseEffect::class)]
@@ -89,17 +90,17 @@ final readonly class Move extends Entity
         #[Field(FieldType::COLLECTION, apiName: 'effect_changes', definition: AbilityEffectChange::class)]
         public Collection $effectChanges,
 
-        /** @var Collection<Pokemon> $learnedByPokemon List of Pokemon that can learn the move. */
+        /** @var ApiResourceCollection<Pokemon> $learnedByPokemon List of Pokemon that can learn the move. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'learned_by_pokemon', definition: Pokemon::class)]
-        public Collection $learnedByPokemon,
+        public ApiResourceCollection $learnedByPokemon,
 
         /** @var Collection<MoveFlavorText> $flavorTextEntries The flavor text of this move listed in different languages. */
         #[Field(FieldType::TRANSLATION, apiName: 'flavor_text_entries', definition: MoveFlavorText::class)]
         public Collection $flavorTextEntries,
 
-        /** @var ProxyEndpoint<Generation>|Generation $generation The generation in which this move was introduced. */
+        /** @var Generation $generation The generation in which this move was introduced. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Generation::class)]
-        public ProxyEndpoint|Generation $generation,
+        public Generation $generation,
 
         /** @var Collection<MachineVersionDetail> $machines The list of previous effects this move has had across version groups of the games. */
         #[Field(FieldType::COLLECTION, definition: MachineVersionDetail::class)]
@@ -121,17 +122,17 @@ final readonly class Move extends Entity
         #[Field(FieldType::COLLECTION, apiName: 'stat_changes', definition: MoveStatChange::class)]
         public Collection $statChanges,
 
-        /** @var ProxyEndpoint<SuperContestEffect>|SuperContestEffect $superContestEffect The effect the move has when used in a super contest. */
+        /** @var SuperContestEffect $superContestEffect The effect the move has when used in a super contest. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'super_contest_effect', definition: SuperContestEffect::class)]
-        public ProxyEndpoint|SuperContestEffect $superContestEffect,
+        public SuperContestEffect|null $superContestEffect,
 
-        /** @var ProxyEndpoint<MoveTarget>|MoveTarget $target The type of target that will receive the effects of the attack. */
+        /** @var MoveTarget $target The type of target that will receive the effects of the attack. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: MoveTarget::class)]
-        public ProxyEndpoint|MoveTarget $target,
+        public MoveTarget $target,
 
-        /** @var ProxyEndpoint<Type>|Type $type The elemental type of this move. */
+        /** @var Type $type The elemental type of this move. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Type::class)]
-        public ProxyEndpoint|Type $type,
+        public Type $type,
     ) {
     }
 }

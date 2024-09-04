@@ -10,6 +10,7 @@ use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -18,10 +19,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#berry-firmnesses
  */
 #[Endpoint(Resource::BERRY_FIRMNESS)]
-final readonly class BerryFirmness extends Entity
+final class BerryFirmness extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -33,9 +35,9 @@ final readonly class BerryFirmness extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var Collection<Berry> $berries A list of the berries with this firmness. */
+        /** @var ApiResourceCollection<Berry> $berries A list of the berries with this firmness. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Berry::class)]
-        public Collection $berries,
+        public ApiResourceCollection $berries,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
@@ -22,10 +21,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#pokemon-colors
  */
 #[Endpoint(Resource::POKEMON_COLOR)]
-final readonly class PokemonColor extends Entity
+final class PokemonColor extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -41,10 +41,9 @@ final readonly class PokemonColor extends Entity
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
 
-        /** @var ProxyEndpoint<PokemonSpecies>|PokemonSpecies $pokemonSpecies A list of the Pokémon species that have this color. */
+        /** @var PokemonSpecies $pokemonSpecies A list of the Pokémon species that have this color. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'pokemon_species', definition: PokemonSpecies::class)]
-        public ProxyEndpoint|PokemonSpecies $pokemonSpecies,
-
+        public PokemonSpecies $pokemonSpecies,
     ) {
     }
 }

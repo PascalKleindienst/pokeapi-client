@@ -5,13 +5,8 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
-use PokeDB\PokeApiClient\Entities\Locations\LocationArea;
-use PokeDB\PokeApiClient\Entities\Utility\VersionEncounterDetail;
-use PokeDB\PokeApiClient\Field\Field;
-use PokeDB\PokeApiClient\Field\FieldType;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -20,13 +15,16 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#pokemon-location-areas
  */
 #[Endpoint(Resource::POKEMON_LOCATION_AREA)]
-final readonly class LocationAreaEncounter extends Entity
+final class LocationAreaEncounter extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function __construct(public Collection $locationAreas)
+    public function __construct(
+        /** @var Collection<LocationAreaItem> $locationAreas The location areas where the referenced Pokémon can be found. */
+        public Collection $locationAreas)
     {
     }
 }

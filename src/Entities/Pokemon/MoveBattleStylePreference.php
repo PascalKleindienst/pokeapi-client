@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Moves\MoveBattleStyle;
 use PokeDB\PokeApiClient\Field\Field;
@@ -13,10 +12,11 @@ use PokeDB\PokeApiClient\Field\FieldType;
 /**
  * @see https://pokeapi.co/docs/v2#movebattlestylepreference
  */
-final readonly class MoveBattleStylePreference extends Entity
+final class MoveBattleStylePreference extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -28,9 +28,9 @@ final readonly class MoveBattleStylePreference extends Entity
         #[Field(FieldType::NUMBER, apiName: 'high_hp_preference')]
         public int $highHpPreference,
 
-        /** @var ProxyEndpoint<MoveBattleStyle>|MoveBattleStyle $moveBattleStyle The move battle style. */
+        /** @var MoveBattleStyle $moveBattleStyle The move battle style. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'move_battle_style', definition: MoveBattleStyle::class)]
-        public ProxyEndpoint|MoveBattleStyle $moveBattleStyle,
+        public MoveBattleStyle $moveBattleStyle,
     ) {
     }
 }

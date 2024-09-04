@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Evolution\EvolutionChain;
@@ -15,6 +14,7 @@ use PokeDB\PokeApiClient\Entities\Utility\FlavorText;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -27,10 +27,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#pokemonspecies
  */
 #[Endpoint(Resource::POKEMON_SPECIES)]
-final readonly class PokemonSpecies extends Entity
+final class PokemonSpecies extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -82,41 +83,41 @@ final readonly class PokemonSpecies extends Entity
         #[Field(FieldType::BOOLEAN, apiName: 'forms_switchable')]
         public bool $formsSwitchable,
 
-        /** @var ProxyEndpoint<GrowthRate>|GrowthRate $growthRate The rate at which this Pokémon species gains levels. */
+        /** @var GrowthRate $growthRate The rate at which this Pokémon species gains levels. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'growth_rate', definition: GrowthRate::class)]
-        public ProxyEndpoint|GrowthRate $growthRate,
+        public GrowthRate|null $growthRate,
 
         /** @var Collection<PokemonSpeciesDexEntry> $pokedexNumbers A list of Pokedexes and the indexes reserved within them for this Pokémon species. */
         #[Field(FieldType::COLLECTION, apiName: 'pokedex_numbers', definition: PokemonSpeciesDexEntry::class)]
         public Collection $pokedexNumbers,
 
-        /** @var Collection<EggGroup> $eggGroups A list of egg groups this Pokémon species is a member of. */
+        /** @var ApiResourceCollection<EggGroup> $eggGroups A list of egg groups this Pokémon species is a member of. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'egg_groups', definition: EggGroup::class)]
-        public Collection $eggGroups,
+        public ApiResourceCollection $eggGroups,
 
-        /** @var ProxyEndpoint<PokemonColor>|PokemonColor $color The color of this Pokémon for Pokédex search. */
+        /** @var PokemonColor $color The color of this Pokémon for Pokédex search. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: PokemonColor::class)]
-        public ProxyEndpoint|PokemonColor $color,
+        public PokemonColor|null $color,
 
-        /** @var ProxyEndpoint<PokemonShape>|PokemonShape|null $shape The shape of this Pokémon for Pokédex search. */
+        /** @var PokemonShape|null $shape The shape of this Pokémon for Pokédex search. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: PokemonShape::class)]
-        public ProxyEndpoint|PokemonShape|null $shape,
+        public PokemonShape|null $shape,
 
-        /** @var ProxyEndpoint<PokemonSpecies>|PokemonSpecies|null $evolvesFromSpecies The Pokémon species that evolves into this Pokemon_species.  */
+        /** @var PokemonSpecies|null $evolvesFromSpecies The Pokémon species that evolves into this Pokemon_species. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'evolves_from_species', definition: PokemonSpecies::class)]
-        public ProxyEndpoint|PokemonSpecies|null $evolvesFromSpecies,
+        public PokemonSpecies|null $evolvesFromSpecies,
 
-        /** @var ProxyEndpoint<EvolutionChain>|EvolutionChain $evolutionChain The evolution chain this Pokémon species is a member of..  */
+        /** @var EvolutionChain|null $evolutionChain The evolution chain this Pokémon species is a member of.. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'evolution_chain', definition: EvolutionChain::class)]
-        public ProxyEndpoint|EvolutionChain $evolutionChain,
+        public EvolutionChain|null $evolutionChain,
 
-        /** @var ProxyEndpoint<PokemonHabitat>|PokemonHabitat|null $habitat The habitat this Pokémon species can be encountered in. */
+        /** @var PokemonHabitat|null $habitat The habitat this Pokémon species can be encountered in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: PokemonHabitat::class)]
-        public ProxyEndpoint|PokemonHabitat|null $habitat,
+        public PokemonHabitat|null $habitat,
 
-        /** @var ProxyEndpoint<Generation>|Generation $generation The generation this Pokémon species was introduced in. */
+        /** @var |Generation $generation The generation this Pokémon species was introduced in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Generation::class)]
-        public ProxyEndpoint|Generation $generation,
+        public Generation|null $generation,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]

@@ -12,6 +12,7 @@ use PokeDB\PokeApiClient\Entities\Utility\Description;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -20,10 +21,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#movelearnmethod
  */
 #[Endpoint(Resource::MOVE_LEARN_METHOD)]
-final readonly class MoveLearnMethod extends Entity
+final class MoveLearnMethod extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -35,9 +37,9 @@ final readonly class MoveLearnMethod extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var Collection<VersionGroup> $versionGroups A list of version groups where moves can be learned through this method. */
+        /** @var ApiResourceCollection<VersionGroup> $versionGroups A list of version groups where moves can be learned through this method. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'version_groups', definition: VersionGroup::class)]
-        public Collection $versionGroups,
+        public ApiResourceCollection $versionGroups,
 
         /** @var Collection<Description> $descriptions The description of this resource listed in different languages.. */
         #[Field(FieldType::TRANSLATION, definition: Description::class)]

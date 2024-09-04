@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Machines;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Games\VersionGroup;
@@ -22,10 +21,11 @@ use PokeDB\PokeApiClient\Field\FieldType;
  * @see https://pokeapi.co/docs/v2#move
  */
 #[Endpoint(Resource::MACHINE)]
-final readonly class Machine extends Entity
+final class Machine extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -33,17 +33,17 @@ final readonly class Machine extends Entity
         #[Field(FieldType::NUMBER)]
         public int $id,
 
-        /** @var ProxyEndpoint<Item>|Item $item The TM or HM item that corresponds to this machine. */
+        /** @var Item $item The TM or HM item that corresponds to this machine. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Item::class)]
-        public ProxyEndpoint|Item $item,
+        public Item $item,
 
-        /** @var ProxyEndpoint<Move>|Move $move The move that is taught by this machine. */
+        /** @var Move $move The move that is taught by this machine. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Move::class)]
-        public ProxyEndpoint|Move $move,
+        public Move $move,
 
-        /** @var ProxyEndpoint<VersionGroup>|VersionGroup $versionGroup The version group that this machine applies to. */
+        /** @var VersionGroup $versionGroup The version group that this machine applies to. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'version_group', definition: VersionGroup::class)]
-        public ProxyEndpoint|VersionGroup $versionGroup,
+        public VersionGroup $versionGroup,
     ) {
     }
 }

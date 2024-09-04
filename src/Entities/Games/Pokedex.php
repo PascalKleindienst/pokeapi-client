@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Games;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Locations\Region;
@@ -13,6 +12,7 @@ use PokeDB\PokeApiClient\Entities\Utility\Description;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -23,10 +23,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#pokedexes
  */
 #[Endpoint(Resource::POKEDEX)]
-final readonly class Pokedex extends Entity
+final class Pokedex extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -54,13 +55,13 @@ final readonly class Pokedex extends Entity
         #[Field(FieldType::COLLECTION, apiName: 'pokemon_entries', definition: PokemonEntry::class)]
         public Collection $pokemonEntries,
 
-        /** @var ProxyEndpoint<Region>|Region|null $region The region this Pokédex catalogues Pokémon for. */
+        /** @var Region|null $region The region this Pokédex catalogues Pokémon for. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Region::class)]
-        public ProxyEndpoint|Region|null $region,
+        public Region|null $region,
 
-        /** @var Collection<VersionGroup> $versionGroups A list of version groups this Pokédex is relevant to. */
+        /** @var ApiResourceCollection<VersionGroup> $versionGroups A list of version groups this Pokédex is relevant to. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'version_groups', definition: VersionGroup::class)]
-        public Collection $versionGroups,
+        public ApiResourceCollection $versionGroups,
     ) {
     }
 }

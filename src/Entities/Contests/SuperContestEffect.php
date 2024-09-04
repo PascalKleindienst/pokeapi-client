@@ -11,6 +11,7 @@ use PokeDB\PokeApiClient\Entities\Moves\Move;
 use PokeDB\PokeApiClient\Entities\Utility\FlavorText;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -19,10 +20,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#contest-effects
  */
 #[Endpoint(Resource::SUPER_CONTEST_EFFECT)]
-final readonly class SuperContestEffect extends Entity
+final class SuperContestEffect extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -38,9 +40,9 @@ final readonly class SuperContestEffect extends Entity
         #[Field(FieldType::TRANSLATION, 'flavor_text_entries', definition: FlavorText::class)]
         public Collection $flavorTexts,
 
-        /** @var Collection<Move> $moves A list of moves that have the effect when used in super contests. */
+        /** @var ApiResourceCollection<Move> $moves A list of moves that have the effect when used in super contests. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Move::class)]
-        public Collection $moves,
+        public ApiResourceCollection $moves,
     ) {
     }
 }

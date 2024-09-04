@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Entities\Evolution;
 
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Pokemon\PokemonSpecies;
 use PokeDB\PokeApiClient\Field\Field;
@@ -14,10 +13,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
 /**
  * @see https://pokeapi.co/docs/v2#evolution-chains
  */
-final readonly class ChainLink extends Entity
+final class ChainLink extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -25,9 +25,9 @@ final readonly class ChainLink extends Entity
         #[Field(FieldType::BOOLEAN, apiName: 'is_baby')]
         public bool $isBaby,
 
-        /** @var ProxyEndpoint<PokemonSpecies>|PokemonSpecies $species The Pokémon species at this point in the evolution chain. */
+        /** @var PokemonSpecies $species The Pokémon species at this point in the evolution chain. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: PokemonSpecies::class)]
-        public ProxyEndpoint|PokemonSpecies $species,
+        public PokemonSpecies $species,
 
         /** @var Collection<EvolutionDetail> $evolutionDetails All details regarding the specific details of the referenced Pokémon species evolution. */
         #[Field(FieldType::COLLECTION, apiName: 'evolution_details', definition: EvolutionDetail::class)]

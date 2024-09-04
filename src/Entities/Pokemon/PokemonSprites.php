@@ -12,10 +12,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
 /**
  * @see https://pokeapi.co/docs/v2#pokemonsprites
  */
-final readonly class PokemonSprites extends Entity
+final class PokemonSprites extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(

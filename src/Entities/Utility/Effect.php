@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Entities\Utility;
 
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
@@ -12,10 +11,11 @@ use PokeDB\PokeApiClient\Field\FieldType;
 /**
  * @see https://pokeapi.co/docs/v2#effect
  */
-final readonly class Effect extends Entity implements Translateable
+final class Effect extends Entity implements Translateable
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -23,9 +23,9 @@ final readonly class Effect extends Entity implements Translateable
         #[Field(FieldType::STRING)]
         public string $effect,
 
-        /** @var ProxyEndpoint<Language>|Language $language The language this effect is in. */
+        /** @var Language $language The language this effect is in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Language::class)]
-        public ProxyEndpoint|Language $language,
+        public Language $language,
         public string $locale,
     ) {
     }

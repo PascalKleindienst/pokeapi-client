@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Games\VersionGroup;
 use PokeDB\PokeApiClient\Entities\Utility\Language;
@@ -14,10 +13,11 @@ use PokeDB\PokeApiClient\Field\FieldType;
 /**
  * @see https://pokeapi.co/docs/v2#abilityflavortext
  */
-final readonly class AbilityFlavorText extends Entity
+final class AbilityFlavorText extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -25,14 +25,14 @@ final readonly class AbilityFlavorText extends Entity
         #[Field(FieldType::STRING, apiName: 'flavor_text')]
         public string $flavorText,
 
-        /** @var ProxyEndpoint<Language>|Language $language The language this effect is in. */
+        /** @var Language $language The language this effect is in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Language::class)]
-        public ProxyEndpoint|Language $language,
+        public Language $language,
         public string $locale,
 
-        /** @var ProxyEndpoint<VersionGroup>|VersionGroup $versionGroup The version group that uses this flavor text. */
+        /** @var VersionGroup $versionGroup The version group that uses this flavor text. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'version_group', definition: VersionGroup::class)]
-        public ProxyEndpoint|VersionGroup $versionGroup,
+        public VersionGroup $versionGroup,
     ) {
     }
 

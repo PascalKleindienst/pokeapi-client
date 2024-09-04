@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Entities\Moves;
 
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
@@ -12,20 +11,21 @@ use PokeDB\PokeApiClient\Field\FieldType;
 /**
  * @see https://pokeapi.co/docs/v2#movemetadata
  */
-final readonly class MoveMetaData extends Entity
+final class MoveMetaData extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        /** @var ProxyEndpoint<MoveAilment>|MoveAilment $ailment The status ailment this move inflicts on its target. */
+        /** @var MoveAilment $ailment The status ailment this move inflicts on its target. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: MoveAilment::class)]
-        public ProxyEndpoint|MoveAilment $ailment,
+        public MoveAilment|null $ailment,
 
-        /** @var ProxyEndpoint<MoveCategory>|MoveCategory $category The category of move this move falls under, e.g. damage or ailment. */
+        /** @var MoveCategory $category The category of move this move falls under, e.g. damage or ailment. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: MoveCategory::class)]
-        public ProxyEndpoint|MoveCategory $category,
+        public MoveCategory|null $category,
 
         /** @var int $minHits The minimum number of times this move hits. Null if it always only hits once. */
         #[Field(FieldType::NUMBER, apiName: 'min_hits')]

@@ -10,6 +10,7 @@ use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Effect;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -18,10 +19,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#itemflingeffect
  */
 #[Endpoint(Resource::ITEM_FLING_EFFECT)]
-final readonly class ItemFlingEffect extends Entity
+final class ItemFlingEffect extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -33,9 +35,9 @@ final readonly class ItemFlingEffect extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var Collection<Item> $items A list of items that have this fling effect. */
+        /** @var ApiResourceCollection<Item> $items A list of items that have this fling effect. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Item::class)]
-        public Collection $items,
+        public ApiResourceCollection $items,
 
         /** @var Collection<Effect> $effectEntries The result of this fling effect listed in different languages. */
         #[Field(FieldType::TRANSLATION, apiName: 'effect_entries', definition: Effect::class)]

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\VersionGameIndex;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -23,10 +23,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#ability
  */
 #[Endpoint(Resource::POKEMON)]
-final readonly class Pokemon extends Entity
+final class Pokemon extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -62,9 +63,9 @@ final readonly class Pokemon extends Entity
         #[Field(FieldType::COLLECTION, definition: PokemonAbility::class)]
         public Collection $abilities,
 
-        /** @var Collection<PokemonForm> $forms A list of forms this Pokémon can take on. */
+        /** @var ApiResourceCollection<PokemonForm> $forms A list of forms this Pokémon can take on. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: PokemonForm::class)]
-        public Collection $forms,
+        public ApiResourceCollection $forms,
 
         /** @var Collection<VersionGameIndex> $gameIndices A list of game indices relevent to Pokémon item by generation. */
         #[Field(FieldType::COLLECTION, apiName: 'game_indices', definition: VersionGameIndex::class)]
@@ -90,9 +91,9 @@ final readonly class Pokemon extends Entity
         #[Field(FieldType::ENTITY, definition: PokemonSprites::class)]
         public PokemonSprites $sprites,
 
-        /** @var ProxyEndpoint<PokemonSpecies>|PokemonSpecies $species The species this Pokémon belongs to. */
+        /** @var PokemonSpecies $species The species this Pokémon belongs to. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: PokemonSpecies::class)]
-        public ProxyEndpoint|PokemonSpecies $species,
+        public PokemonSpecies $species,
 
         /** @var Collection<PokemonStat> $stats A list of base stat values for this Pokémon. */
         #[Field(FieldType::COLLECTION, definition: PokemonStat::class)]

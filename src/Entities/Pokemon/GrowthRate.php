@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Description;
-use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
 use PokeDB\PokeApiClient\Utils\Collection;
@@ -20,10 +18,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#growth-rates
  */
 #[Endpoint(Resource::GROWTH_RATE)]
-final readonly class GrowthRate extends Entity
+final class GrowthRate extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -47,9 +46,9 @@ final readonly class GrowthRate extends Entity
         #[Field(FieldType::COLLECTION, definition: GrowthRateExperienceLevel::class)]
         public Collection $levels,
 
-        /** @var ProxyEndpoint<PokemonSpecies>|PokemonSpecies $pokemonSpecies A list of Pokémon species that gain levels at this growth rate.. */
+        /** @var PokemonSpecies $pokemonSpecies A list of Pokémon species that gain levels at this growth rate.. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'pokemon_species', definition: PokemonSpecies::class)]
-        public ProxyEndpoint|PokemonSpecies $pokemonSpecies,
+        public PokemonSpecies $pokemonSpecies,
     ) {
     }
 }

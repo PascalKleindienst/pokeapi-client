@@ -18,10 +18,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#pal-park-areas
  */
 #[Endpoint(Resource::PAL_PARK_AREA)]
-final readonly class PalParkArea extends Entity
+final class PalParkArea extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(

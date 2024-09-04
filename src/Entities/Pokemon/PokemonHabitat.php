@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
@@ -19,10 +18,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#pokemon-habitats
  */
 #[Endpoint(Resource::POKEMON_HABITAT)]
-final readonly class PokemonHabitat extends Entity
+final class PokemonHabitat extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -38,10 +38,9 @@ final readonly class PokemonHabitat extends Entity
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
 
-        /** @var ProxyEndpoint<PokemonSpecies>|PokemonSpecies $pokemonSpecies A list of the Pokémon species that can be found in this habitat. */
+        /** @var PokemonSpecies $pokemonSpecies A list of the Pokémon species that can be found in this habitat. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'pokemon_species', definition: PokemonSpecies::class)]
-        public ProxyEndpoint|PokemonSpecies $pokemonSpecies,
-
+        public PokemonSpecies $pokemonSpecies,
     ) {
     }
 }

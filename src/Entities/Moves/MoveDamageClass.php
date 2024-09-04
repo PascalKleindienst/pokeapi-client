@@ -9,15 +9,17 @@ use PokeDB\PokeApiClient\Entities\Utility\Description;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
  * @see https://pokeapi.co/docs/v2#movedamageclass
  */
-final readonly class MoveDamageClass extends Entity
+final class MoveDamageClass extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -33,9 +35,9 @@ final readonly class MoveDamageClass extends Entity
         #[Field(FieldType::TRANSLATION, definition: Description::class)]
         public Collection $descriptions,
 
-        /** @var Collection<Move> $moves A list of moves that fall into this damage class. */
+        /** @var ApiResourceCollection<Move> $moves A list of moves that fall into this damage class. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Move::class)]
-        public Collection $moves,
+        public ApiResourceCollection $moves,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]

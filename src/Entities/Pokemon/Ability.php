@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Games\Generation;
@@ -23,10 +22,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#ability
  */
 #[Endpoint(Resource::ABILITY)]
-final readonly class Ability extends Entity
+final class Ability extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -39,12 +39,12 @@ final readonly class Ability extends Entity
         public string $name,
 
         /** @var bool $isMainSeries Whether or not this ability originated in the main series of the video games. */
-        #[Field(FieldType::BOOLEAN)]
+        #[Field(FieldType::BOOLEAN, apiName: 'is_main_series')]
         public bool $isMainSeries,
 
-        /** @var ProxyEndpoint<Generation>|Generation $generation The generation this ability originated in. */
+        /** @var Generation $generation The generation this ability originated in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Generation::class)]
-        public ProxyEndpoint|Generation $generation,
+        public Generation $generation,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]

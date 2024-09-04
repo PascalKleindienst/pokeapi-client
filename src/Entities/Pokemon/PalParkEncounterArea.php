@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Locations\PalParkArea;
 use PokeDB\PokeApiClient\Field\Field;
@@ -13,10 +12,11 @@ use PokeDB\PokeApiClient\Field\FieldType;
 /**
  * @see https://pokeapi.co/docs/v2#palparkencounterarea
  */
-final readonly class PalParkEncounterArea extends Entity
+final class PalParkEncounterArea extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -28,9 +28,9 @@ final readonly class PalParkEncounterArea extends Entity
         #[Field(FieldType::NUMBER)]
         public int $rate,
 
-        /** @var ProxyEndpoint<PalParkArea>|PalParkArea $area The pal park area where this encounter happens. */
+        /** @var PalParkArea $area The pal park area where this encounter happens. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: PalParkArea::class)]
-        public ProxyEndpoint|PalParkArea $area,
+        public PalParkArea $area,
     ) {
     }
 }

@@ -11,6 +11,7 @@ use PokeDB\PokeApiClient\Entities\Utility\Description;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -19,10 +20,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#itemattribute
  */
 #[Endpoint(Resource::ITEM_ATTRIBUTE)]
-final readonly class ItemAttribute extends Entity
+final class ItemAttribute extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -34,9 +36,9 @@ final readonly class ItemAttribute extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var Collection<Item> $items A list of items that have this attribute. */
+        /** @var ApiResourceCollection<Item> $items A list of items that have this attribute. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Item::class)]
-        public Collection $items,
+        public ApiResourceCollection $items,
 
         /** @var Collection<Description> $descriptions The description of this item attribute listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Description::class)]

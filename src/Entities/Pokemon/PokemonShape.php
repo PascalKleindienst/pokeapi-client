@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
@@ -19,10 +18,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#pokemon-shapes
  */
 #[Endpoint(Resource::POKEMON_SHAPE)]
-final readonly class PokemonShape extends Entity
+final class PokemonShape extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -42,10 +42,9 @@ final readonly class PokemonShape extends Entity
         #[Field(FieldType::TRANSLATION, apiName: 'awesome_names', definition: AwesomeName::class)]
         public Collection $awesomeNames,
 
-        /** @var ProxyEndpoint<PokemonSpecies>|PokemonSpecies $pokemonSpecies A list of the Pokémon species that have this shape. */
+        /** @var PokemonSpecies $pokemonSpecies A list of the Pokémon species that have this shape. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'pokemon_species', definition: PokemonSpecies::class)]
-        public ProxyEndpoint|PokemonSpecies $pokemonSpecies,
-
+        public PokemonSpecies $pokemonSpecies,
     ) {
     }
 }

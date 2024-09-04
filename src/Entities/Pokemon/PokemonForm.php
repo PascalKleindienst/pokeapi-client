@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Games\VersionGroup;
@@ -24,10 +23,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#pokemonform
  */
 #[Endpoint(Resource::POKEMON_FORM)]
-final readonly class PokemonForm extends Entity
+final class PokemonForm extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -63,9 +63,9 @@ final readonly class PokemonForm extends Entity
         #[Field(FieldType::STRING, apiName: 'form_name')]
         public ?string $formName,
 
-        /** @var ProxyEndpoint<Pokemon>|Pokemon $pokemon The Pokémon that can take on this form. */
+        /** @var Pokemon $pokemon The Pokémon that can take on this form. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Pokemon::class)]
-        public ProxyEndpoint|Pokemon $pokemon,
+        public Pokemon $pokemon,
 
         /** @var Collection<PokemonFormType> $types A list of details showing types this Pokémon form has. */
         #[Field(FieldType::COLLECTION, definition: PokemonFormType::class)]
@@ -75,9 +75,9 @@ final readonly class PokemonForm extends Entity
         #[Field(FieldType::ENTITY, definition: Sprite::class)]
         public Sprite $sprites,
 
-        /** @var ProxyEndpoint<VersionGroup>|VersionGroup $versionGroup The version group this Pokémon form was introduced in. */
+        /** @var VersionGroup $versionGroup The version group this Pokémon form was introduced in. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'version_group', definition: VersionGroup::class)]
-        public ProxyEndpoint|VersionGroup $versionGroup,
+        public VersionGroup $versionGroup,
 
         /** @var Collection<Name> $names The form specific full name of this Pokémon form, or empty if the form does not have a specific name. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]

@@ -19,10 +19,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#contest-effects
  */
 #[Endpoint(Resource::CONTEST_EFFECT)]
-final readonly class ContestEffect extends Entity
+final class ContestEffect extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(

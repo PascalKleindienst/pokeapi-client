@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Encounters;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
@@ -20,10 +19,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#encounter-conditions
  */
 #[Endpoint(Resource::ENCOUNTER_CONDITION_VALUE)]
-final readonly class EncounterConditionValue extends Entity
+final class EncounterConditionValue extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -35,9 +35,9 @@ final readonly class EncounterConditionValue extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var ProxyEndpoint<EncounterConditionValue>|EncounterCondition $condition The condition this encounter condition value pertains to. */
+        /** @var EncounterCondition $condition The condition this encounter condition value pertains to. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: EncounterCondition::class)]
-        public ProxyEndpoint|EncounterCondition $condition,
+        public EncounterCondition $condition,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]

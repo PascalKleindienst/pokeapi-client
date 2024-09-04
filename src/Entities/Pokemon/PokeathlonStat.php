@@ -21,10 +21,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#pokeathlonstat
  */
 #[Endpoint(Resource::POKEATHLON_STAT)]
-final readonly class PokeathlonStat extends Entity
+final class PokeathlonStat extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(

@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Moves\MoveDamageClass;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -23,10 +23,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#stat
  */
 #[Endpoint(Resource::STAT)]
-final readonly class Stat extends Entity
+final class Stat extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -54,13 +55,13 @@ final readonly class Stat extends Entity
         #[Field(FieldType::ENTITY, apiName: 'affecting_natures', definition: NatureStatAffectSets::class)]
         public NatureStatAffectSets $affectingNatures,
 
-        /** @var Collection<Characteristic> $characteristics A list of characteristics that are set on a Pokémon when its highest base stat is this stat. */
+        /** @var ApiResourceCollection<Characteristic> $characteristics A list of characteristics that are set on a Pokémon when its highest base stat is this stat. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Characteristic::class)]
-        public Collection $characteristics,
+        public ApiResourceCollection $characteristics,
 
-        /** @var ProxyEndpoint<MoveDamageClass>|MoveDamageClass|null $moveDamageClass The class of damage this stat is directly related to. */
+        /** @var MoveDamageClass|null $moveDamageClass The class of damage this stat is directly related to. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'move_damage_class', definition: MoveDamageClass::class)]
-        public ProxyEndpoint|MoveDamageClass|null $moveDamageClass,
+        public MoveDamageClass|null $moveDamageClass,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]

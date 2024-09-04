@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Berries;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Contests\ContestType;
 use PokeDB\PokeApiClient\Entities\Entity;
@@ -21,10 +20,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#berry-flavors
  */
 #[Endpoint(Resource::BERRY_FLAVOR)]
-final readonly class BerryFlavor extends Entity
+final class BerryFlavor extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -44,9 +44,9 @@ final readonly class BerryFlavor extends Entity
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
 
-        /** @var ProxyEndpoint<ContestType>|ContestType $contestType The contest type that correlates with this berry flavor. */
+        /** @var ContestType $contestType The contest type that correlates with this berry flavor. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: ContestType::class)]
-        public ProxyEndpoint|ContestType $contestType,
+        public ContestType $contestType,
     ) {
     }
 }

@@ -10,6 +10,7 @@ use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -19,10 +20,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#egg-groups
  */
 #[Endpoint(Resource::EGG_GROUP)]
-final readonly class EggGroup extends Entity
+final class EggGroup extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -34,9 +36,9 @@ final readonly class EggGroup extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var Collection<PokemonSpecies> $pokemonSpecies A list of all Pokémon species that are members of this egg group. */
+        /** @var ApiResourceCollection<PokemonSpecies> $pokemonSpecies A list of all Pokémon species that are members of this egg group. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'pokemon_species', definition: PokemonSpecies::class)]
-        public Collection $pokemonSpecies,
+        public ApiResourceCollection $pokemonSpecies,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]

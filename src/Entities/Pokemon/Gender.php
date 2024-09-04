@@ -9,6 +9,7 @@ use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -17,10 +18,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#genders
  */
 #[Endpoint(Resource::GENDER)]
-final readonly class Gender extends Entity
+final class Gender extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -32,9 +34,9 @@ final readonly class Gender extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var Collection<PokemonSpecies> $requiredForEvolution A list of Pokémon species that required this gender in order for a Pokémon to evolve into them. */
+        /** @var ApiResourceCollection<PokemonSpecies> $requiredForEvolution A list of Pokémon species that required this gender in order for a Pokémon to evolve into them. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'required_for_evolution', definition: PokemonSpecies::class)]
-        public Collection $requiredForEvolution,
+        public ApiResourceCollection $requiredForEvolution,
 
         /** @var Collection<Collection<PokemonSpeciesGender>> $pokemonSpeciesDetails A list of Pokémon species that can be this gender and how likely it is that they will be. */
         #[Field(FieldType::COLLECTION, apiName: 'pokemon_species_details', definition: PokemonSpeciesGender::class)]

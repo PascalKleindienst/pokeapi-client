@@ -18,10 +18,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#move-battle-styles
  */
 #[Endpoint(Resource::MOVE_BATTLE_STYLE)]
-final readonly class MoveBattleStyle extends Entity
+final class MoveBattleStyle extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(

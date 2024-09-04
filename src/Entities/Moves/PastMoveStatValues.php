@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Entities\Moves;
 
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Games\VersionGroup;
 use PokeDB\PokeApiClient\Entities\Pokemon\Type;
@@ -16,10 +15,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
 /**
  * @see https://pokeapi.co/docs/v2#pastmovestatvalues
  */
-final readonly class PastMoveStatValues extends Entity
+final class PastMoveStatValues extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -43,13 +43,13 @@ final readonly class PastMoveStatValues extends Entity
         #[Field(FieldType::TRANSLATION, apiName: 'effect_entries', definition: VerboseEffect::class)]
         public Collection $effectEntries,
 
-        /** @var ProxyEndpoint<Type>|Type $type The elemental type of this move. */
+        /** @var Type|null $type The elemental type of this move. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Type::class)]
-        public ProxyEndpoint|Type $type,
+        public Type|null $type,
 
-        /** @var ProxyEndpoint<VersionGroup>|VersionGroup $versionGroup The version group in which these move stat values were in effect. */
+        /** @var VersionGroup $versionGroup The version group in which these move stat values were in effect. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'version_group', definition: VersionGroup::class)]
-        public ProxyEndpoint|VersionGroup $versionGroup,
+        public VersionGroup $versionGroup,
     ) {
     }
 }

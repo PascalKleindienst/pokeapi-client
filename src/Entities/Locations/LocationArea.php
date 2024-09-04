@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Locations;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
@@ -20,10 +19,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#location
  */
 #[Endpoint(Resource::LOCATION_AREA)]
-final readonly class LocationArea extends Entity
+final class LocationArea extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -43,9 +43,9 @@ final readonly class LocationArea extends Entity
         #[Field(FieldType::COLLECTION, apiName: 'encounter_method_rates', definition: EncounterMethodRate::class)]
         public Collection $encounterMethodRates,
 
-        /** @var ProxyEndpoint<Location>|Location $location The region this location area can be found in. */
+        /** @var Location $location The region this location area can be found in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Location::class)]
-        public ProxyEndpoint|Location $location,
+        public Location $location,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]

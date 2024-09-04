@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Games;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Locations\Region;
@@ -16,6 +15,7 @@ use PokeDB\PokeApiClient\Entities\Pokemon\Type;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -26,10 +26,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#version
  */
 #[Endpoint(Resource::GENERATION)]
-final readonly class Generation extends Entity
+final class Generation extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -41,33 +42,33 @@ final readonly class Generation extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var Collection<Ability> $abilities A list of abilities that were introduced in this generation.. */
+        /** @var ApiResourceCollection<Ability> $abilities A list of abilities that were introduced in this generation.. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Ability::class)]
-        public Collection $abilities,
+        public ApiResourceCollection $abilities,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
 
-        /** @var ProxyEndpoint<Region>|Region $mainRegion The main region travelled in this generation.. */
+        /** @var Region $mainRegion The main region travelled in this generation.. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'main_region', definition: Region::class)]
-        public ProxyEndpoint|Region $mainRegion,
+        public Region $mainRegion,
 
-        /** @var Collection<Move> $moves A list of moves that were introduced in this generation. */
+        /** @var ApiResourceCollection<Move> $moves A list of moves that were introduced in this generation. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Move::class)]
-        public Collection $moves,
+        public ApiResourceCollection $moves,
 
-        /** @var Collection<PokemonSpecies> $pokemonSpecies A list of Pokémon species that were introduced in this generation. */
+        /** @var ApiResourceCollection<PokemonSpecies> $pokemonSpecies A list of Pokémon species that were introduced in this generation. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'pokemon_species', definition: PokemonSpecies::class)]
-        public Collection $pokemonSpecies,
+        public ApiResourceCollection $pokemonSpecies,
 
-        /** @var Collection<Type> $types A list of types that were introduced in this generation. */
+        /** @var ApiResourceCollection<Type> $types A list of types that were introduced in this generation. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Type::class)]
-        public Collection $types,
+        public ApiResourceCollection $types,
 
-        /** @var Collection<VersionGroup> $versionGroups A list of version groups that were introduced in this generation. */
+        /** @var ApiResourceCollection<VersionGroup> $versionGroups A list of version groups that were introduced in this generation. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'version_groups', definition: VersionGroup::class)]
-        public Collection $versionGroups,
+        public ApiResourceCollection $versionGroups,
     ) {
     }
 }

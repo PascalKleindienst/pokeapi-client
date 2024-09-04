@@ -10,6 +10,7 @@ use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -18,10 +19,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#itemattribute
  */
 #[Endpoint(Resource::ITEM_POKET)]
-final readonly class ItemPocket extends Entity
+final class ItemPocket extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -33,9 +35,9 @@ final readonly class ItemPocket extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var Collection<ItemCategory> $categories A list of item categories that are relevant to this item pocket. */
+        /** @var ApiResourceCollection<ItemCategory> $categories A list of item categories that are relevant to this item pocket. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: ItemCategory::class)]
-        public Collection $categories,
+        public ApiResourceCollection $categories,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]

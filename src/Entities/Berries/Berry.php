@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Berries;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Items\Item;
@@ -21,10 +20,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#berries
  */
 #[Endpoint(Resource::BERRY)]
-final readonly class Berry extends Entity
+final class Berry extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -60,21 +60,21 @@ final readonly class Berry extends Entity
         #[Field(FieldType::NUMBER, 'soil_dryness')]
         public int $soilDryness,
 
-        /** @var ProxyEndpoint<BerryFirmness>|BerryFirmness $firmness The firmness of this berry, used in making Pokéblocks or Poffins. */
+        /** @var BerryFirmness $firmness The firmness of this berry, used in making Pokéblocks or Poffins. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: BerryFirmness::class)]
-        public ProxyEndpoint|BerryFirmness $firmness,
+        public BerryFirmness $firmness,
 
         /** @var Collection<BerryFlavorMap> $flavors A list of references to each flavor a berry can have and the potency of each of those flavors in regard to this berry. */
         #[Field(FieldType::COLLECTION, definition: BerryFlavorMap::class)]
         public Collection $flavors,
 
-        /** @var ProxyEndpoint<Item>|Item $item Berries are actually items. This is a reference to the item specific data for this berry. */
+        /** @var Item $item Berries are actually items. This is a reference to the item specific data for this berry. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Item::class)]
-        public ProxyEndpoint|Item $item,
+        public Item $item,
 
-        /** @var ProxyEndpoint<Type>|Type $naturalGiftType The type inherited by "Natural Gift" when used with this Berry. */
+        /** @var Type $naturalGiftType The type inherited by "Natural Gift" when used with this Berry. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'natural_gift_type', definition: Type::class)]
-        public ProxyEndpoint|Type $naturalGiftType,
+        public Type $naturalGiftType,
     ) {
     }
 }

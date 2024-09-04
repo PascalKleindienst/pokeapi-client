@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Games\Generation;
@@ -15,6 +14,7 @@ use PokeDB\PokeApiClient\Entities\Utility\GenerationGameIndex;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -25,10 +25,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#type
  */
 #[Endpoint(Resource::TYPE)]
-final readonly class Type extends Entity
+final class Type extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -52,13 +53,13 @@ final readonly class Type extends Entity
         #[Field(FieldType::COLLECTION, apiName: 'game_indices', definition: GenerationGameIndex::class)]
         public Collection $gameIndices,
 
-        /** @var ProxyEndpoint<Generation>|Generation $generation The generation this type was introduced in. */
+        /** @var Generation $generation The generation this type was introduced in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Generation::class)]
-        public ProxyEndpoint|Generation $generation,
+        public Generation $generation,
 
-        /** @var ProxyEndpoint<MoveDamageClass>|MoveDamageClass|null $moveDamageClass The class of damage this stat is directly related to. */
+        /** @var MoveDamageClass|null $moveDamageClass The class of damage this stat is directly related to. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'move_damage_class', definition: MoveDamageClass::class)]
-        public ProxyEndpoint|MoveDamageClass|null $moveDamageClass,
+        public MoveDamageClass|null $moveDamageClass,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
@@ -68,9 +69,9 @@ final readonly class Type extends Entity
         #[Field(FieldType::COLLECTION, definition: TypePokemon::class)]
         public Collection $pokemon,
 
-        /** @var Collection<Move> $moves A list of moves that have this type.. */
+        /** @var ApiResourceCollection<Move> $moves A list of moves that have this type.. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: Move::class)]
-        public Collection $moves,
+        public ApiResourceCollection $moves,
     ) {
     }
 }

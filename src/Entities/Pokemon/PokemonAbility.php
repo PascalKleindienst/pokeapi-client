@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
@@ -12,10 +11,11 @@ use PokeDB\PokeApiClient\Field\FieldType;
 /**
  * @see https://pokeapi.co/docs/v2#pokemonability
  */
-final readonly class PokemonAbility extends Entity
+final class PokemonAbility extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -27,9 +27,9 @@ final readonly class PokemonAbility extends Entity
         #[Field(FieldType::NUMBER)]
         public int $slot,
 
-        /** @var ProxyEndpoint<Ability>|Ability $ability The ability the Pokémon may have. */
+        /** @var Ability $ability The ability the Pokémon may have. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Ability::class)]
-        public ProxyEndpoint|Ability $ability,
+        public Ability $ability,
     ) {
     }
 }

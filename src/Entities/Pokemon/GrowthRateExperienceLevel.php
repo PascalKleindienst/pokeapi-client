@@ -11,10 +11,11 @@ use PokeDB\PokeApiClient\Field\FieldType;
 /**
  * @see https://pokeapi.co/docs/v2#growthrateexperiencelevel
  */
-final readonly class GrowthRateExperienceLevel extends Entity
+final class GrowthRateExperienceLevel extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(

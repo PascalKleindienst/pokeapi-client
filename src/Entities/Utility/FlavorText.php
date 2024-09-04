@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Entities\Utility;
 
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Games\Version;
 use PokeDB\PokeApiClient\Field\Field;
@@ -13,10 +12,11 @@ use PokeDB\PokeApiClient\Field\FieldType;
 /**
  * @see https://pokeapi.co/docs/v2#flavortext
  */
-final readonly class FlavorText extends Entity implements Translateable
+final class FlavorText extends Entity implements Translateable
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -24,14 +24,14 @@ final readonly class FlavorText extends Entity implements Translateable
         #[Field(FieldType::STRING, 'flavor_text')]
         public string $flavorText,
 
-        /** @var ProxyEndpoint<Language>|Language $language The language this name is in. */
+        /** @var Language $language The language this name is in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Language::class)]
-        public ProxyEndpoint|Language $language,
+        public Language $language,
         public string $locale,
 
-        /** @var ProxyEndpoint<Version>|Version $version The game version this flavor text is extracted from. */
+        /** @var Version $version The game version this flavor text is extracted from. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Version::class)]
-        public ProxyEndpoint|Version $version,
+        public Version $version,
     ) {
     }
 

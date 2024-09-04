@@ -12,10 +12,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
 /**
  * @see https://pokeapi.co/docs/v2#naturepokeathlonstataffectsets
  */
-final readonly class NaturePokeathlonStatAffectSets extends Entity
+final class NaturePokeathlonStatAffectSets extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(

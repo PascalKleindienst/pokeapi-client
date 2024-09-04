@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Berries\BerryFlavor;
 use PokeDB\PokeApiClient\Entities\Entity;
-use PokeDB\PokeApiClient\Entities\Utility\Description;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
@@ -21,10 +19,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#natures
  */
 #[Endpoint(Resource::NATURE)]
-final readonly class Nature extends Entity
+final class Nature extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -36,21 +35,21 @@ final readonly class Nature extends Entity
         #[Field(FieldType::STRING)]
         public string $name,
 
-        /** @var ProxyEndpoint<Stat>|Stat $decreasedStat The stat decreased by 10% in Pokémon with this nature. */
+        /** @var Stat $decreasedStat The stat decreased by 10% in Pokémon with this nature. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'decreased_stat', definition: Stat::class)]
-        public ProxyEndpoint|Stat $decreasedStat,
+        public Stat $decreasedStat,
 
-        /** @var ProxyEndpoint<Stat>|Stat $increasedStat The stat increased by 10% in Pokémon with this nature. */
+        /** @var Stat $increasedStat The stat increased by 10% in Pokémon with this nature. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'increased_stat', definition: Stat::class)]
-        public ProxyEndpoint|Stat $increasedStat,
+        public Stat $increasedStat,
 
-        /** @var ProxyEndpoint<BerryFlavor>|BerryFlavor $hatesFlavor The flavor hated by Pokémon with this nature. */
+        /** @var BerryFlavor $hatesFlavor The flavor hated by Pokémon with this nature. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'hates_flavor', definition: BerryFlavor::class)]
-        public ProxyEndpoint|BerryFlavor $hatesFlavor,
+        public BerryFlavor $hatesFlavor,
 
-        /** @var ProxyEndpoint<BerryFlavor>|BerryFlavor $likesFlavorflavor The flavor liked by Pokémon with this nature. */
+        /** @var BerryFlavor $likesFlavorflavor The flavor liked by Pokémon with this nature. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'likes_flavor', definition: BerryFlavor::class)]
-        public ProxyEndpoint|BerryFlavor $likesFlavor,
+        public BerryFlavor $likesFlavor,
 
         /** @var Collection<NatureStatChange> $pokeathlonStatChanges A list of Pokéathlon stats this nature effects and how much it effects them. */
         #[Field(FieldType::COLLECTION, apiName: 'pokeathlon_stat_changes', definition: NatureStatChange::class)]

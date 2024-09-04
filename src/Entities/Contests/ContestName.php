@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Entities\Contests;
 
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Language;
 use PokeDB\PokeApiClient\Entities\Utility\Translateable;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
 
-final readonly class ContestName extends Entity implements Translateable
+final class ContestName extends Entity implements Translateable
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -26,9 +26,9 @@ final readonly class ContestName extends Entity implements Translateable
         #[Field(FieldType::STRING)]
         public string $color,
 
-        /** @var ProxyEndpoint<Language>|Language $language The language this name is in. */
+        /** @var Language $language The language this name is in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Language::class)]
-        public ProxyEndpoint|Language $language,
+        public Language $language,
         public string $locale
     ) {
     }

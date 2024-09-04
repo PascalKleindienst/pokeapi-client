@@ -20,10 +20,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#encounter-methods
  */
 #[Endpoint(Resource::ENCOUNTER_METHOD)]
-final readonly class EncounterMethod extends Entity
+final class EncounterMethod extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(

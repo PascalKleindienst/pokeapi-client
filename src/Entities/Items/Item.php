@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Entities\Items;
 
 use PokeDB\PokeApiClient\Api\Endpoint;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Evolution\EvolutionChain;
@@ -16,6 +15,7 @@ use PokeDB\PokeApiClient\Entities\Utility\VerboseEffect;
 use PokeDB\PokeApiClient\Entities\Utility\VersionGroupFlavorText;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -25,10 +25,11 @@ use PokeDB\PokeApiClient\Utils\Collection;
  * @see https://pokeapi.co/docs/v2#item
  */
 #[Endpoint(Resource::ITEM)]
-final readonly class Item extends Entity
+final class Item extends Entity
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -48,17 +49,17 @@ final readonly class Item extends Entity
         #[Field(FieldType::NUMBER, apiName: 'fling_power')]
         public int $flingPower,
 
-        /** @var ProxyEndpoint<ItemFlingEffect>|ItemFlingEffect $flingEffect The effect of the move Fling when used with this item. */
+        /** @var ItemFlingEffect $flingEffect The effect of the move Fling when used with this item. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'fling_effect', definition: ItemFlingEffect::class)]
-        public ProxyEndpoint|ItemFlingEffect $flingEffect,
+        public ItemFlingEffect|null $flingEffect,
 
-        /** @var Collection<ItemFlingEffect> $attributes A list of attributes this item has. */
+        /** @var ApiResourceCollection<ItemFlingEffect> $attributes A list of attributes this item has. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: ItemFlingEffect::class)]
-        public Collection $attributes,
+        public ApiResourceCollection $attributes,
 
-        /** @var ProxyEndpoint<ItemCategory>|ItemCategory $category The category of items this item falls into. */
+        /** @var ItemCategory $category The category of items this item falls into. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: ItemCategory::class)]
-        public ProxyEndpoint|ItemCategory $category,
+        public ItemCategory $category,
 
         /** @var Collection<VerboseEffect> $effectEntries The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, apiName: 'effect_entries', definition: VerboseEffect::class)]
@@ -76,7 +77,7 @@ final readonly class Item extends Entity
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
 
-        /** @var ItemSprites $sprites  A set of sprites used to depict this item in the game. */
+        /** @var ItemSprites $sprites A set of sprites used to depict this item in the game. */
         #[Field(FieldType::ENTITY, definition: ItemSprites::class)]
         public ItemSprites $sprites,
 
@@ -84,9 +85,9 @@ final readonly class Item extends Entity
         #[Field(FieldType::COLLECTION, apiName: 'held_by_pokemon', definition: ItemHolderPokemon::class)]
         public Collection $heldByPokemon,
 
-        /** @var ProxyEndpoint<EvolutionChain>|EvolutionChain $babyTriggerFor An evolution chain this item requires to produce a bay during mating. */
+        /** @var EvolutionChain $babyTriggerFor An evolution chain this item requires to produce a bay during mating. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'baby_trigger_for', definition: EvolutionChain::class)]
-        public ProxyEndpoint|EvolutionChain $babyTriggerFor,
+        public EvolutionChain|null $babyTriggerFor,
 
         /** @var Collection<MachineVersionDetail> $machines A list of the machines related to this item. */
         #[Field(FieldType::COLLECTION, definition: MachineVersionDetail::class)]
