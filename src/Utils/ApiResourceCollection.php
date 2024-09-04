@@ -44,7 +44,7 @@ class ApiResourceCollection extends Collection
     {
         $data = [];
         foreach ($this->lazyEntries as $element) {
-            if ( $element->identifier) {
+            if ($element->identifier) {
                 $data[] = $element->identifier;
             }
         }
@@ -71,7 +71,7 @@ class ApiResourceCollection extends Collection
         }
 
         // Load the resource
-        if ( \array_key_exists($key, $this->lazyEntries) && $this->lazyEntries[$key]->identifier) {
+        if (\array_key_exists($key, $this->lazyEntries) && $this->lazyEntries[$key]->identifier) {
             /** @var T|null $result */
             $result = Api::getInstance()?->get($this->resource, $this->lazyEntries[$key]->identifier);
 
@@ -111,7 +111,7 @@ class ApiResourceCollection extends Collection
 
     public function all(): array
     {
-        foreach ($this->lazyEntries as $key => $element) {
+        foreach (array_keys($this->lazyEntries) as $key) {
             $this->get($key);
         }
 
@@ -120,7 +120,7 @@ class ApiResourceCollection extends Collection
 
     public function getIterator(): Generator
     {
-        foreach ($this->lazyEntries as $key => $element) {
+        foreach (array_keys($this->lazyEntries) as $key) {
             $data = $this->get($key);
             if ($data !== null) {
                 yield $key => $data;

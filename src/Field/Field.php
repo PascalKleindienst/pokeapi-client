@@ -35,7 +35,7 @@ final readonly class Field
 
         if ($this->definition !== null && ! is_a($this->definition, Entity::class, true)) {
             throw new TypeError(
-                'Invalid type for $definition. Expected '.Entity::class.' got '.$this->definition
+                'Invalid type for $definition. Expected ' . Entity::class . ' got ' . $this->definition
             );
         }
     }
@@ -55,7 +55,9 @@ final readonly class Field
                 FieldType::COLLECTION => $this->getCollection($entityManager, $value ?? []),
                 FieldType::TRANSLATION => $this->getTranslation($entityManager, $value ?? []),
                 FieldType::NAMED_API_RESOURCE => $value ?? [],
-                FieldType::NAMED_API_RESOURCE_LIST => $this->definition ? ApiResourceCollection::create($this->definition, $value ?? []) : null
+                FieldType::NAMED_API_RESOURCE_LIST => $this->definition
+                    ? ApiResourceCollection::create($this->definition, $value ?? [])
+                    : null
             };
         } catch (ReflectionException) {
             return null;

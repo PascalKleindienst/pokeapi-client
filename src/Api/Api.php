@@ -94,7 +94,7 @@ class Api
     {
         $this->validateEntity($entity);
         $url = $this->getUrl($entity);
-        $url .= '?'.http_build_query(['limit' => $limit, 'offset' => $offset]);
+        $url .= '?' . http_build_query(['limit' => $limit, 'offset' => $offset]);
 
         // Get from cache
         $cacheKey = hash('sha256', urlencode($url));
@@ -118,7 +118,7 @@ class Api
     protected function validateEntity(string $entity): void
     {
         if (! is_a($entity, Entity::class, true)) {
-            throw new TypeError('Invalid type for parameter $entity. Expected '.Entity::class.' got '.$entity);
+            throw new TypeError('Invalid type for parameter $entity. Expected ' . Entity::class . ' got ' . $entity);
         }
     }
 
@@ -151,22 +151,11 @@ class Api
     }
 
     /**
-     * @param  class-string<T>  $entity
-     *
-     * @psalm-return ResourceList<T>
+     * @param class-string<T> $entity
+     * @phpstan-return ResourceList<T>
      */
     protected function createResourceList(string $entity, array $data = []): ResourceList
     {
-        $result = $data['results'] ?? [];
-
-        /** @var ResourceList<T> $resourceList */
-        $resourceList = new ResourceList(
-            $data['count'] ?? 0,
-            ApiResourceCollection::create($entity, $result),
-            $data['next'] ?? null,
-            $data['previous'] ?? null,
-        );
-
-        return $resourceList;
+        return ResourceList::create($entity, $data);
     }
 }

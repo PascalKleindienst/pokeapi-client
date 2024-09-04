@@ -10,10 +10,11 @@ use PokeDB\PokeApiClient\Api\Api;
 use PokeDB\PokeApiClient\Exceptions\NetworkException;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Utils\ResourceIdentifier;
-use Psr\Cache\InvalidArgumentException;
 use ReflectionAttribute;
+use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
+use InvalidArgumentException;
 
 abstract class Entity implements JsonSerializable
 {
@@ -37,9 +38,11 @@ abstract class Entity implements JsonSerializable
 
     /**
      * Lazy Load an uninitialized property.
+     *
      * @throws JsonException if there is some JSON Error with the api response
      * @throws NetworkException if there is some network error while fetching the API
      * @throws InvalidArgumentException if we cannot lazy load the property
+     * @throws \Psr\Cache\InvalidArgumentException if the cache key is somehow invalid
      * @throws ReflectionException
      */
     public function __get(string $name): mixed
@@ -60,7 +63,9 @@ abstract class Entity implements JsonSerializable
             }
 
             // Otherwise, throw an exception
-            throw new \InvalidArgumentException('Could not lazy load the property ' . $name . ' for ' . \get_class($this));
+            throw new InvalidArgumentException(
+                'Could not lazy load the property ' . $name . ' for ' . \get_class($this)
+            );
         }
 
         return $property->getValue($this);
@@ -69,9 +74,11 @@ abstract class Entity implements JsonSerializable
     public function jsonSerialize(): array
     {
         $data = get_object_vars($this);
-        $props = (new \ReflectionClass($this))->getProperties(ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PROTECTED);
+        $props = (new ReflectionClass($this))
+            ->getProperties(ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PROTECTED);
+
         foreach ($props as $prop) {
-            if (\array_key_exists($prop->getName(), $data)){
+            if (\array_key_exists($prop->getName(), $data)) {
                 unset($data[$prop->getName()]);
             }
         }

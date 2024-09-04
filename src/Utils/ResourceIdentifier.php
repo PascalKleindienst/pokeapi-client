@@ -20,4 +20,3 @@ final readonly class ResourceIdentifier
         $this->identifier = $resource['name'] ?? pathinfo($resource['url'] ?? '', PATHINFO_FILENAME);
     }
 }
-

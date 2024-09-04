@@ -176,7 +176,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
         /** @var array<list<T>> $group */
         $group = [];
         foreach ($this->getIterator() as $element) {
-            $key = \is_object($element) && property_exists($element, $column) ? $element->$column : ($element[$column] ?? '');
+            $key = \is_object($element) && property_exists($element, $column)
+                ? $element->$column :
+                ($element[$column] ?? '');
             $group[$key][] = $element;
         }
 

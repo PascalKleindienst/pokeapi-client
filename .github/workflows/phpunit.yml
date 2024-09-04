@@ -9,7 +9,7 @@ jobs:
     name: "PHPUnit tests"
     strategy:
       matrix:
-        php-versions: ['8.2']
+        php-versions: ['8.2', '8.3']
 
     runs-on: ubuntu-latest
 
@@ -39,7 +39,7 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: "Tests"
-        run: "./vendor/bin/phpunit"
+        run: "./vendor/bin/pest --coverage-clover=build/logs/clover.xml"
 
       - name: "Coverage Report"
         uses: codecov/codecov-action@v1
