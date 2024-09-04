@@ -1,167 +1,108 @@
 <?php
 
-declare(strict_types=1);
-
-namespace PokeDB\PokeApiClient\Tests\Utils;
-
-use PHPUnit\Framework\TestCase;
 use PokeDB\PokeApiClient\Utils\Collection;
 
-class CollectionTest extends TestCase
-{
-    /**
-     * @dataProvider dataProvider
-     */
-    public function testGet($data)
-    {
-        $collection = new Collection($data);
+it('can get an element from the collection', function () {
+    $collection = new Collection(['foo' => 'bar']);
+    expect($collection->get('foo'))->toBe('bar');
+});
 
-        foreach ($data as $key => $expected) {
-            $this->assertEquals($expected, $collection->get($key));
-        }
-    }
+it('can add an element to the collection', function () {
+    $collection = new Collection();
+    $collection->add('foo');
+    expect($collection->get(0))->toBe('foo');
+});
 
-    public function testGetInvalid()
-    {
-        $collection = new Collection();
+it('can set an element in the collection', function () {
+    $collection = new Collection();
+    $collection->set('foo', 'bar');
+    expect($collection->get('foo'))->toBe('bar');
+});
 
-        $this->assertNull($collection->get('unknown'));
-    }
+it('can set an element in the collection without an index', function () {
+    $collection = new Collection();
+    $collection->set(null, 'foo');
+    expect($collection->get(0))->toBe('foo');
+});
 
-    /**
-     * @depends testGet
-     * @dataProvider dataProvider
-     */
-    public function testAdd($data)
-    {
-        $collection = new Collection();
+it('can remove an element from the collection', function () {
+    $collection = new Collection(['foo' => 'bar']);
+    $collection->remove('foo');
+    expect($collection->get('foo'))->toBeNull();
+});
 
-        foreach ($data as $key => $expected) {
-            $collection->add($expected);
-            $this->assertEquals($expected, $collection->get($key));
-        }
-    }
+it('can check if an element exists in the collection', function () {
+    $collection = new Collection(['foo' => 'bar']);
+    expect($collection->has('foo'))->toBeTrue()
+        ->and($collection->has('bar'))->toBeFalse();
+});
 
-    /**
-     * @depends testGet
-     * @dataProvider dataProvider
-     */
-    public function testSet($data)
-    {
-        $collection = new Collection();
+it('can count the number of elements in the collection', function () {
+    $collection = new Collection(['foo' => 'bar']);
+    expect($collection->count())->toBe(1);
+});
 
-        foreach ($data as $key => $expected) {
-            $collection->set(null, $expected);
-            $this->assertEquals($expected, $collection->get($key));
-        }
-    }
+it('can get the keys of the collection elements', function () {
+    $collection = new Collection(['foo' => 'bar']);
+    expect($collection->getKeys())->toEqual(['foo']);
+});
 
-    /**
-     * @dataProvider dataProvider
-     */
-    public function testCount($data)
-    {
-        $collection = new Collection($data);
-        $this->assertCount(\count($data), $collection);
-    }
+it('can clear the collection', function () {
+    $collection = new Collection(['foo' => 'bar']);
+    $collection->clear();
+    expect($collection->count())->toBe(0);
+});
 
-    /**
-     * @depends testCount
-     * @dataProvider dataProvider
-     */
-    public function testClear($data)
-    {
-        $collection = new Collection($data);
-        $collection->clear();
-        $this->assertCount(0, $collection);
-    }
+it('can iterate over the collection', function () {
+    $collection = new Collection(['foo' => 'bar']);
+    $collection->each(function ($item) {
+        expect($item)->toBe('bar');
+    });
+});
 
-    /**
-     * @depends testCount
-     * @dataProvider dataProvider
-     */
-    public function testGetKey($data)
-    {
-        $collection = new Collection($data);
-        $this->assertEquals(array_keys($data), $collection->getKeys());
-    }
+it('can convert the collection to an array', function () {
+    $collection = new Collection(['foo' => 'bar']);
+    expect($collection->all())->toEqual(['foo' => 'bar']);
+});
 
-    /**
-     * @dataProvider dataProvider
-     */
-    public function testJsonSerialize($data)
-    {
-        $collection = new Collection($data);
-        $this->assertEquals(json_encode($data), json_encode($collection));
-    }
+it('can get the first element in the collection', function () {
+    $collection = new Collection(['foo' => 'bar', 'baz' => 'qux']);
+    expect($collection->first())->toBe('bar');
+});
 
-    /**
-     * @dataProvider dataProvider
-     */
-    public function testToArray($data)
-    {
-        $collection = new Collection($data);
-        $this->assertEquals($data, $collection->toArray());
-    }
+it('can get the last element in the collection', function () {
+    $collection = new Collection(['foo' => 'bar', 'baz' => 'qux']);
+    expect($collection->last())->toBe('qux');
+});
 
-    /**
-     * @dataProvider dataProvider
-     */
-    public function testFirst($data)
-    {
-        $collection = new Collection($data);
-        $this->assertEquals($data[0], $collection->first());
-    }
+it('can group the collection by a column', function () {
+    $collection = new Collection([['foo' => 'bar', 'qux' => 'barfoo'], ['foo' => 'baz', 'qux' => 'foobar']]);
+    expect($collection->groupBy('foo'))->toEqual(
+        new Collection(['bar' => [['foo' => 'bar', 'qux' => 'barfoo']], 'baz' => [['foo' => 'baz', 'qux' => 'foobar']]])
+    );
+});
 
-    public function testFirstEmpty()
-    {
-        $collection = new Collection();
-        $this->assertNull($collection->first());
-    }
+it('can pluck the collection by a column', function () {
+    $collection = new Collection([['foo' => 'bar', 'qux' => 'barfoo'], ['foo' => 'baz', 'qux' => 'foobar']]);
+    expect($collection->pluck('foo'))->toEqual(new Collection(['bar', 'baz']));
+});
 
-    /**
-     * @dataProvider dataProvider
-     */
-    public function testLast($data)
-    {
-        $collection = new Collection($data);
-        $this->assertEquals(array_reverse($data)[0], $collection->last());
-    }
+it('can pluck the collection by a column and index', function () {
+    $collection = new Collection([['foo' => 'bar', 'qux' => 'barfoo'], ['foo' => 'baz', 'qux' => 'foobar']]);
+    expect($collection->pluck('foo', 'qux'))->toEqual(new Collection(['barfoo' => 'bar', 'foobar' => 'baz']));
+});
 
-    public function testLastEmpty()
-    {
-        $collection = new Collection();
-        $this->assertNull($collection->last());
-    }
+it('can map the collection', function () {
+    $collection = new Collection(['foo' => 'bar', 'baz' => 'qux']);
+    expect($collection->map(fn ($item) => strtoupper($item)))->toEqual(new Collection(['foo' => 'BAR', 'baz' => 'QUX']));
+});
 
-    /**
-     * @depends testGet
-     * @dataProvider dataProvider
-     */
-    public function testRemove($data)
-    {
-        $collection = new Collection($data);
-        $this->assertEquals($data[1], $collection->get(1));
-        $collection->remove(1);
-        $this->assertNull($collection->get(1));
-    }
+it('can filter the collection', function () {
+    $collection = new Collection(['foo' => 'bar', 'baz' => 'qux']);
+    expect($collection->filter(fn ($item) => $item !== 'bar'))->toEqual(new Collection(['baz' => 'qux']));
+});
 
-    /**
-     * @dataProvider dataProvider
-     */
-    public function testIterator($data)
-    {
-        $collection = new Collection($data);
-
-        foreach ($collection as $key => $item) {
-            $this->assertEquals($data[$key], $item);
-        }
-    }
-
-    public function dataProvider()
-    {
-        return [
-            [['a', 'b', 'c']]
-        ];
-    }
-}
+it('can serialize the collection', function () {
+    $collection = new Collection(['foo' => 'bar', 'baz' => 'qux']);
+    expect($collection->jsonSerialize())->toEqual(['foo' => 'bar', 'baz' => 'qux']);
+});
