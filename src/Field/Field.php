@@ -5,24 +5,27 @@ declare(strict_types=1);
 namespace PokeDB\PokeApiClient\Field;
 
 use Attribute;
-use InvalidArgumentException;
-use PokeDB\PokeApiClient\Api\Api;
-use PokeDB\PokeApiClient\Api\ProxyEndpoint;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\EntityManager;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
+use ReflectionException;
 use TypeError;
 
+/**
+ * @template T of Entity
+ */
 #[Attribute(Attribute::TARGET_PROPERTY | Attribute::TARGET_PARAMETER)]
 final readonly class Field
 {
     /**
-     * @template T of Entity
-     * @psalm-var string|class-string<T>|null
-     * @phpstan-var string|class-string<T>|null
+     * @var class-string<T>|null
      */
     public ?string $definition;
 
+    /**
+     * @param class-string<T>|null $definition
+     */
     public function __construct(
         public FieldType $type,
         public ?string $apiName = null,
@@ -30,9 +33,9 @@ final readonly class Field
     ) {
         $this->definition = $definition;
 
-        if ($this->definition !== null && !is_a($this->definition, Entity::class, true)) {
+        if ($this->definition !== null && ! is_a($this->definition, Entity::class, true)) {
             throw new TypeError(
-                'Invalid type for $definition. Expected ' . Entity::class . ' got ' . $this->definition
+                'Invalid type for $definition. Expected '.Entity::class.' got '.$this->definition
             );
         }
     }
@@ -42,61 +45,37 @@ final readonly class Field
         $property = $this->apiName ?? $key;
         $value = $data[$property] ?? null;
 
-        return match ($this->type) {
-            FieldType::STRING => empty($value) ? null : (string) $value,
-            FieldType::BOOLEAN => (bool) $value,
-            FieldType::NUMBER => (int) $value,
-            FieldType::LIST => (array) $value,
-            FieldType::ENTITY => $this->createEntity($entityManager, $value ?? []),
-            FieldType::COLLECTION => $this->getCollection($entityManager, $value ?? []),
-            FieldType::TRANSLATION => $this->getTranslation($entityManager, $value ?? []),
-            FieldType::NAMED_API_RESOURCE => $this->getApiResource($entityManager, $value ?? []),
-            FieldType::NAMED_API_RESOURCE_LIST => $this->getApiResourceList($entityManager, $value ?? []),
-        };
+        try {
+            return match ($this->type) {
+                FieldType::STRING => empty($value) ? null : (string) $value,
+                FieldType::BOOLEAN => (bool) $value,
+                FieldType::NUMBER => (int) $value,
+                FieldType::LIST => (array) $value,
+                FieldType::ENTITY => $this->createEntity($entityManager, $value ?? []),
+                FieldType::COLLECTION => $this->getCollection($entityManager, $value ?? []),
+                FieldType::TRANSLATION => $this->getTranslation($entityManager, $value ?? []),
+                FieldType::NAMED_API_RESOURCE => $value ?? [],
+                FieldType::NAMED_API_RESOURCE_LIST => $this->definition ? ApiResourceCollection::create($this->definition, $value ?? []) : null
+            };
+        } catch (ReflectionException) {
+            return null;
+        }
     }
 
+    /**
+     * @throws ReflectionException
+     */
     private function createEntity(EntityManager $manager, array $data): Entity
     {
         /** @var class-string<Entity> $entity */
         $entity = $this->definition;
+
         return $manager->create($entity, $data);
     }
 
     /**
-     * @return Collection<ProxyEndpoint>
-     */
-    private function getApiResourceList(EntityManager $manager, array $resources): Collection
-    {
-        if ($this->definition === null) {
-            throw new InvalidArgumentException('Cannot resolve value. Missing definition');
-        }
-
-        /** @var Collection<ProxyEndpoint> $collection */
-        $collection = new Collection();
-        foreach ($resources as $resource) {
-            $collection->add($this->getApiResource($manager, $resource));
-        }
-
-        return $collection;
-    }
-
-    private function getApiResource(EntityManager $manager, array $resource): ?ProxyEndpoint
-    {
-        if ($this->definition === null) {
-            throw new InvalidArgumentException('Cannot resolve value. Missing definition');
-        }
-
-        if (empty($resource)) {
-            return null;
-        }
-
-        /** @var class-string<Entity> $entity */
-        $entity = $this->definition;
-        return new ProxyEndpoint($manager, $entity, $resource);
-    }
-
-    /**
      * @return Collection<Entity>|Collection<mixed>
+     * @throws ReflectionException
      */
     private function getCollection(EntityManager $manager, array $data): Collection
     {
@@ -115,6 +94,7 @@ final readonly class Field
 
     /**
      * @return Collection<Entity>
+     * @throws ReflectionException
      */
     public function getTranslation(EntityManager $manager, array $data): Collection
     {
