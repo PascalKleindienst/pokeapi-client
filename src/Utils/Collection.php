@@ -12,9 +12,9 @@ use JsonSerializable;
 /**
  * Simple Collection Data Structure.
  *
- * @template T
+ * @template-covariant T
  *
- * @template-implements IteratorAggregate<T>
+ * @template-implements IteratorAggregate<int|string, T>
  */
 class Collection implements Countable, IteratorAggregate, JsonSerializable
 {
@@ -115,6 +115,14 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
      * @return array<T>
      */
     public function all(): array
+    {
+        return $this->elements;
+    }
+
+    /**
+     * @return array<T>
+     */
+    public function toArray(): array
     {
         return $this->elements;
     }

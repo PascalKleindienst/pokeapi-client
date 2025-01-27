@@ -26,7 +26,7 @@ final class VersionEncounterDetail extends Entity
         public int $maxChance,
 
         /** @var Collection<Encounter> $encounterDetails A list of encounters and their specifics. */
-        #[Field(FieldType::COLLECTION, apiName: 'encounter_details')]
+        #[Field(FieldType::COLLECTION, apiName: 'encounter_details', definition: Encounter::class)]
         public Collection $encounterDetails,
 
         /** @var Version $version The game version this encounter happens in. */

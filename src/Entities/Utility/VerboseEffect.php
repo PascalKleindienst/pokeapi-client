@@ -25,7 +25,7 @@ final class VerboseEffect extends Entity implements Translateable
 
         /** @var string $shortEffect The localized effect text in brief. */
         #[Field(FieldType::STRING, apiName: 'short_effect')]
-        public string $shortEffect,
+        public ?string $shortEffect,
 
         /** @var Language $language The language this effect is in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Language::class)]

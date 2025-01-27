@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Api;
 
+use Amp\Cache\CacheException;
 use JsonException;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\EntityManager;
@@ -54,7 +55,7 @@ class Api
      * @param string|int      $identifier
      * @phpstan-return T
      * @return Entity
-     * @throws InvalidArgumentException if the cache key is somehow invalid
+     * @throws \Psr\Cache\CacheException if the cache key is somehow invalid
      * @throws JsonException if there is some malformed api response
      * @throws NetworkException if there is some network error while fetching the API
      * @throws ReflectionException if the entity class does not exist
@@ -88,7 +89,7 @@ class Api
      * @throws JsonException if there is some malformed api response
      * @throws NetworkException if there is some network error while fetching the API
      * @throws ReflectionException if the entity class does not exist
-     * @throws InvalidArgumentException if the cache key is somehow invalid
+     * @throws \Psr\Cache\CacheException if the cache key is somehow invalid
      */
     public function all(string $entity, int $limit = 20, int $offset = 0): ResourceList
     {

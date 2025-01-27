@@ -9,6 +9,7 @@ use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\EntityManager;
 use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
+use PokeDB\PokeApiClient\Utils\ResourceIdentifier;
 use ReflectionException;
 use TypeError;
 
@@ -56,7 +57,7 @@ final readonly class Field
                 FieldType::TRANSLATION => $this->getTranslation($entityManager, $value ?? []),
                 FieldType::NAMED_API_RESOURCE => $value ?? [],
                 FieldType::NAMED_API_RESOURCE_LIST => $this->definition
-                    ? ApiResourceCollection::create($this->definition, $value ?? [])
+                    ? ApiResourceCollection::create($this->definition, array_map(static fn(array $res) => new ResourceIdentifier($res),$value ?? []))
                     : null
             };
         } catch (ReflectionException) {

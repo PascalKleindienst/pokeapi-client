@@ -6,6 +6,7 @@ namespace PokeDB\PokeApiClient\Api;
 
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
+use PokeDB\PokeApiClient\Utils\ResourceIdentifier;
 
 /**
  * @template T of Entity
@@ -40,7 +41,7 @@ final class ResourceList extends Entity
     {
         return new self(
             $data['count'] ?? 0,
-            ApiResourceCollection::create($entity, $data['results'] ?? []),
+            ApiResourceCollection::create($entity, array_map(static fn(array $res) => new ResourceIdentifier($res),$data['results'] ?? [])),
             $data['next'] ?? null,
             $data['previous'] ?? null,
         );

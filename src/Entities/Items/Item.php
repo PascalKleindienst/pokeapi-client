@@ -54,7 +54,7 @@ final class Item extends Entity
         public ItemFlingEffect|null $flingEffect,
 
         /** @var ApiResourceCollection<ItemFlingEffect> $attributes A list of attributes this item has. */
-        #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: ItemFlingEffect::class)]
+        #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: ItemAttribute::class)]
         public ApiResourceCollection $attributes,
 
         /** @var ItemCategory $category The category of items this item falls into. */

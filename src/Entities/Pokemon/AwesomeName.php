@@ -6,13 +6,14 @@ namespace PokeDB\PokeApiClient\Entities\Pokemon;
 
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Language;
+use PokeDB\PokeApiClient\Entities\Utility\Translateable;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
 
 /**
  * @see https://pokeapi.co/docs/v2#pokemon-shapes
  */
-final class AwesomeName extends Entity
+final class AwesomeName extends Entity implements Translateable
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
@@ -29,5 +30,10 @@ final class AwesomeName extends Entity
         public Language $language,
         public string $locale,
     ) {
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
 }
