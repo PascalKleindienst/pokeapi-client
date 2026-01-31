@@ -157,7 +157,10 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     }
 
     /**
-     * @param  callable(T): mixed  $callback
+     * @template TReturn
+     *
+     * @param  callable(T): TReturn  $callback
+     * @return self<TReturn>
      */
     public function map(callable $callback): self
     {
@@ -166,11 +169,12 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
 
     /**
      * @param  callable(T): void  $callback
+     * @return self<T>
      */
     public function each(callable $callback): self
     {
         foreach ($this->getIterator() as $element) {
-            $callback($element);
+            $callback(clone $element);
         }
 
         return $this;
@@ -196,6 +200,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
         return $collection;
     }
 
+    /**
+     * @return self<T>
+     */
     public function pluck(string $column, ?string $index = null): self
     {
         return new self(array_column($this->all(), $column, $index));

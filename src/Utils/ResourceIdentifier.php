@@ -7,16 +7,21 @@ namespace PokeDB\PokeApiClient\Utils;
 final readonly class ResourceIdentifier
 {
     public ?string $name;
+
     public ?string $url;
+
     public ?string $identifier;
 
+    public ?string $id;
+
     /**
-     * @param array{name?: string, url?: string} $resource
+     * @param  array{name?: string, url?: string}  $resource
      */
     public function __construct(array $resource)
     {
         $this->name = $resource['name'] ?? null;
         $this->url = $resource['url'] ?? null;
         $this->identifier = $resource['name'] ?? pathinfo($resource['url'] ?? '', PATHINFO_FILENAME);
+        $this->id = pathinfo($resource['url'] ?? '', PATHINFO_FILENAME) ?: null;
     }
 }

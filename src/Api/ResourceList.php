@@ -30,18 +30,17 @@ final class ResourceList extends Entity
 
         /** @var ?string $previous The URL for the previous page in the list. */
         public ?string $previous = null,
-    ) {
-    }
+    ) {}
 
     /**
-     * @param class-string<T> $entity
-     * @param array{count?: int, next?: string, previous?: string, results?: array} $data
+     * @param  class-string<T>  $entity
+     * @param  array{count?: int, next?: string, previous?: string, results?: array}  $data
      */
     public static function create(string $entity, array $data): self
     {
         return new self(
             $data['count'] ?? 0,
-            ApiResourceCollection::create($entity, array_map(static fn(array $res) => new ResourceIdentifier($res),$data['results'] ?? [])),
+            ApiResourceCollection::create($entity, array_map(static fn (array $res) => new ResourceIdentifier($res), $data['results'] ?? [])),
             $data['next'] ?? null,
             $data['previous'] ?? null,
         );

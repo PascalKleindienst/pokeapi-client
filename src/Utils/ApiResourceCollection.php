@@ -10,6 +10,7 @@ use PokeDB\PokeApiClient\Entities\Entity;
 
 /**
  * @template T of Entity
+ *
  * @extends Collection<T>
  */
 class ApiResourceCollection extends Collection
@@ -25,15 +26,15 @@ class ApiResourceCollection extends Collection
     private array $lazyEntries = [];
 
     /**
-     * @param class-string<T> $entity
-     * @param ResourceIdentifier[] $resources
-     * @return self
+     * @param  class-string<T>  $entity
+     * @param  ResourceIdentifier[]  $resources
      */
     public static function create(string $entity, array $resources): ApiResourceCollection
     {
-        $collection = new self();
+        $collection = new self;
         $collection->resource = $entity;
         $collection->lazyEntries = $resources;
+
         return $collection;
     }
 
@@ -62,7 +63,7 @@ class ApiResourceCollection extends Collection
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function get(string|int $key): mixed
     {
@@ -73,13 +74,15 @@ class ApiResourceCollection extends Collection
         // Load the resource
         if (\array_key_exists($key, $this->lazyEntries) && $this->lazyEntries[$key]->identifier) {
             /** @var T|null $result */
-            $result = Api::getInstance()?->get($this->resource, $this->lazyEntries[$key]->identifier);
+            $result = $this->initialize($key);
 
             if ($result === null) {
                 return null;
             }
 
+            // TODO: This is a memory issue when we have a lot of entities like for a nationaldex -> we should not store all of them in memory
             $this->elements[$key] = $result;
+
             return $result;
         }
 
@@ -121,10 +124,24 @@ class ApiResourceCollection extends Collection
     public function getIterator(): Generator
     {
         foreach (array_keys($this->lazyEntries) as $key) {
-            $data = $this->get($key);
-            if ($data !== null) {
-                yield $key => $data;
+            if (\array_key_exists($key, $this->elements)) {
+                yield parent::get($key);
             }
+
+            yield $key => $this->initialize($key);
         }
+    }
+
+    /**
+     * @return T|null
+     *
+     * @throws \JsonException
+     * @throws \PokeDB\PokeApiClient\Exceptions\NetworkException
+     * @throws \Psr\Cache\CacheException
+     * @throws \ReflectionException
+     */
+    protected function initialize(int|string $key)
+    {
+        return Api::getInstance()?->get($this->resource, $this->lazyEntries[$key]->id ?? $this->lazyEntries[$key]->identifier);
     }
 }

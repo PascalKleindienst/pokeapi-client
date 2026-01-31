@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Api;
 
-use Amp\Cache\CacheException;
 use JsonException;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\EntityManager;
 use PokeDB\PokeApiClient\Exceptions\NetworkException;
-use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use Psr\Cache\CacheItemPoolInterface;
-use Psr\Cache\InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use TypeError;
 
+use function array_key_exists;
+
 /**
  * @template T of Entity
  */
-class Api
+final class Api
 {
     public const API_ENDPOINT = 'https://pokeapi.co/api/v2/';
 
-    protected EntityManager $entityManager;
+    private EntityManager $entityManager;
+
     private static ?self $instance = null;
 
     /**
@@ -34,15 +34,16 @@ class Api
 
     public function __construct(
         private readonly string $url = self::API_ENDPOINT,
-        private readonly ClientInterface $client = new HttpClient(),
+        private readonly ClientInterface $client = new HttpClient,
         private readonly CacheItemPoolInterface $cache = new FilesystemAdapter('pokeapi')
     ) {
-        $this->entityManager = new EntityManager();
+        $this->entityManager = new EntityManager;
         self::$instance = $this;
     }
 
     /**
      * Get API instance (if created already)
+     *
      * @return self<T>|null
      */
     public static function getInstance(): ?self
@@ -51,10 +52,10 @@ class Api
     }
 
     /**
-     * @param class-string<T> $entity
-     * @param string|int      $identifier
+     * @param  class-string<T>  $entity
+     *
      * @phpstan-return T
-     * @return Entity
+     *
      * @throws \Psr\Cache\CacheException if the cache key is somehow invalid
      * @throws JsonException if there is some malformed api response
      * @throws NetworkException if there is some network error while fetching the API
@@ -71,6 +72,7 @@ class Api
 
         if ($cache->isHit()) {
             $data = $cache->get();
+
             return $this->entityManager->create($entity, (array) $data);
         }
 
@@ -95,7 +97,7 @@ class Api
     {
         $this->validateEntity($entity);
         $url = $this->getUrl($entity);
-        $url .= '?' . http_build_query(['limit' => $limit, 'offset' => $offset]);
+        $url .= '?'.http_build_query(['limit' => $limit, 'offset' => $offset]);
 
         // Get from cache
         $cacheKey = hash('sha256', urlencode($url));
@@ -103,6 +105,7 @@ class Api
 
         if ($cache->isHit()) {
             $data = $cache->get();
+
             return $this->createResourceList($entity, (array) $data);
         }
 
@@ -116,10 +119,10 @@ class Api
     /**
      * @param  class-string<T>  $entity
      */
-    protected function validateEntity(string $entity): void
+    private function validateEntity(string $entity): void
     {
         if (! is_a($entity, Entity::class, true)) {
-            throw new TypeError('Invalid type for parameter $entity. Expected ' . Entity::class . ' got ' . $entity);
+            throw new TypeError('Invalid type for parameter $entity. Expected '.Entity::class.' got '.$entity);
         }
     }
 
@@ -128,13 +131,13 @@ class Api
      *
      * @throws ReflectionException
      */
-    protected function getUrl(string $entity, string|int|null $identifier = null): string
+    private function getUrl(string $entity, string|int|null $identifier = null): string
     {
-        if (! \array_key_exists($entity, $this->refClasses)) {
+        if (! array_key_exists($entity, $this->refClasses)) {
             $this->refClasses[$entity] = new ReflectionClass($entity);
         }
 
-        $endpoint = strtolower($this->refClasses[$entity]->getShortName());
+        $endpoint = mb_strtolower($this->refClasses[$entity]->getShortName());
 
         $attributes = $this->refClasses[$entity]->getAttributes(Endpoint::class);
         if (! empty($attributes)) {
@@ -152,10 +155,11 @@ class Api
     }
 
     /**
-     * @param class-string<T> $entity
+     * @param  class-string<T>  $entity
+     *
      * @phpstan-return ResourceList<T>
      */
-    protected function createResourceList(string $entity, array $data = []): ResourceList
+    private function createResourceList(string $entity, array $data = []): ResourceList
     {
         return ResourceList::create($entity, $data);
     }

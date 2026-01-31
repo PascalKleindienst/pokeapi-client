@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PokeDB\PokeApiClient\Entities\Moves;
 
+use PokeDB\PokeApiClient\Api\Endpoint;
+use PokeDB\PokeApiClient\Api\Resource;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Description;
 use PokeDB\PokeApiClient\Entities\Utility\Name;
@@ -15,6 +17,7 @@ use PokeDB\PokeApiClient\Utils\Collection;
 /**
  * @see https://pokeapi.co/docs/v2#movedamageclass
  */
+#[Endpoint(Resource::MOVE_DAMAGE_CLASS)]
 final class MoveDamageClass extends Entity
 {
     /**
@@ -42,6 +45,5 @@ final class MoveDamageClass extends Entity
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
         public Collection $names,
-    ) {
-    }
+    ) {}
 }
