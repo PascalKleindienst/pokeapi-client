@@ -145,7 +145,8 @@ final class Api
             $endpoint = $endpointAttr->resource->value;
         }
 
-        $url = sprintf('%s%s/%s', $this->url, $endpoint, $identifier ?? '');
+        $identifier = str_replace(self::API_ENDPOINT, '', (string) ($identifier ?? ''));
+        $url = sprintf('%s%s/%s', $this->url, $endpoint, $identifier);
         if ($identifier && str_contains($endpoint, '%s')) {
             $endpoint = sprintf($endpoint, $identifier);
             $url = sprintf('%s%s', $this->url, $endpoint);
