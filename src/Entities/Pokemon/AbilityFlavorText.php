@@ -7,13 +7,14 @@ namespace PokeDB\PokeApiClient\Entities\Pokemon;
 use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Games\VersionGroup;
 use PokeDB\PokeApiClient\Entities\Utility\Language;
+use PokeDB\PokeApiClient\Entities\Utility\Translateable;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
 
 /**
  * @see https://pokeapi.co/docs/v2#abilityflavortext
  */
-final class AbilityFlavorText extends Entity
+final class AbilityFlavorText extends Entity implements Translateable
 {
     /**
      * phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.EmptyLine
@@ -33,8 +34,7 @@ final class AbilityFlavorText extends Entity
         /** @var VersionGroup $versionGroup The version group that uses this flavor text. */
         #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'version_group', definition: VersionGroup::class)]
         public VersionGroup $versionGroup,
-    ) {
-    }
+    ) {}
 
     public function getLocale(): string
     {

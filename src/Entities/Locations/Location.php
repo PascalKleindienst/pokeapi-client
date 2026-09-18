@@ -38,7 +38,7 @@ final class Location extends Entity
 
         /** @var Region $region The region this location can be found in. */
         #[Field(FieldType::NAMED_API_RESOURCE, definition: Region::class)]
-        public Region $region,
+        public ?Region $region,
 
         /** @var Collection<Name> $names The name of this resource listed in different languages. */
         #[Field(FieldType::TRANSLATION, definition: Name::class)]
@@ -51,6 +51,5 @@ final class Location extends Entity
         /** @var ApiResourceCollection<LocationArea> $areas Areas that can be found within this location.. */
         #[Field(FieldType::NAMED_API_RESOURCE_LIST, definition: LocationArea::class)]
         public ApiResourceCollection $areas,
-    ) {
-    }
+    ) {}
 }

@@ -10,6 +10,7 @@ use PokeDB\PokeApiClient\Entities\Entity;
 use PokeDB\PokeApiClient\Entities\Utility\Description;
 use PokeDB\PokeApiClient\Field\Field;
 use PokeDB\PokeApiClient\Field\FieldType;
+use PokeDB\PokeApiClient\Utils\ApiResourceCollection;
 use PokeDB\PokeApiClient\Utils\Collection;
 
 /**
@@ -47,8 +48,7 @@ final class GrowthRate extends Entity
         public Collection $levels,
 
         /** @var PokemonSpecies $pokemonSpecies A list of Pokémon species that gain levels at this growth rate.. */
-        #[Field(FieldType::NAMED_API_RESOURCE, apiName: 'pokemon_species', definition: PokemonSpecies::class)]
-        public PokemonSpecies $pokemonSpecies,
-    ) {
-    }
+        #[Field(FieldType::NAMED_API_RESOURCE_LIST, apiName: 'pokemon_species', definition: PokemonSpecies::class)]
+        public ApiResourceCollection $pokemonSpecies,
+    ) {}
 }

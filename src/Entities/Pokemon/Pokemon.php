@@ -102,6 +102,5 @@ final class Pokemon extends Entity
         /** @var Collection<PokemonType> $types A list of details showing types this Pokémon has. */
         #[Field(FieldType::COLLECTION, definition: PokemonType::class)]
         public Collection $types,
-    ) {
-    }
+    ) {}
 }
